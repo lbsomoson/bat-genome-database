@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import "./LoginForm";
-import history from "../..//history";
+// import history from "../..//history";
 
 export class LoginForm extends Component {
   constructor(props) {
@@ -78,9 +78,13 @@ export class LoginForm extends Component {
       localStorage.logged_in = data.logged_in;
       // window.location.reload();
       if (localStorage.logged_in === "true") {
-        history.push("/home");
+        
+        // ako nagcomment out nito para matanggal error kasi di pa nacoconvert eto to functional component
+        // use useNavigate from react router v6 to replace history pag naconvert na yung file - lara
+
+        // history.push("/home");
       } else {
-        history.push("/login");
+        // history.push("/login");
       }
 
       window.location.reload();

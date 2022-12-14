@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./TaxonomyHandler.css";
-import history from "../..//history";
+// import history from "../..//history";
 
 export default class TaxonomyHandler extends Component {
   constructor(props) {
@@ -19,19 +19,22 @@ export default class TaxonomyHandler extends Component {
           <div className="tax_picker_row">
             <button
               className="category_button"
-              onClick={() => history.push("/taxonomy/domain")}
+              // ako nagcomment out nung mga onClick para matanggal error kasi di pa nacoconvert eto to functional component
+              // use useNavigate from react router v6 to replace history pag naconvert na yung file - lara
+
+              // onClick={() => history.push("/taxonomy/domain")}
             >
               DOMAIN
             </button>
             <button
               className="category_button"
-              onClick={() => history.push("/taxonomy/phylum")}
+              // onClick={() => history.push("/taxonomy/phylum")}
             >
               PHYLUM
             </button>
             <button
               className="category_button"
-              onClick={() => history.push("/taxonomy/class")}
+              // onClick={() => history.push("/taxonomy/class")}
             >
               CLASS
             </button>
@@ -39,25 +42,25 @@ export default class TaxonomyHandler extends Component {
           <div className="tax_picker_row">
             <button
               className="category_button"
-              onClick={() => history.push("/taxonomy/order")}
+              // onClick={() => history.push("/taxonomy/order")}
             >
               ORDER
             </button>
             <button
               className="category_button"
-              onClick={() => history.push("/taxonomy/family")}
+              // onClick={() => history.push("/taxonomy/family")}
             >
               FAMILY
             </button>
             <button
               className="category_button"
-              onClick={() => history.push("/taxonomy/genus")}
+              // onClick={() => history.push("/taxonomy/genus")}
             >
               GENUS
             </button>
             <button
               className="category_button"
-              onClick={() => history.push("/taxonomy/species")}
+              // onClick={() => history.push("/taxonomy/species")}
             >
               SPECIES
             </button>
