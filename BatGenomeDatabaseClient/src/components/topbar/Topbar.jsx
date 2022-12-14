@@ -1,7 +1,11 @@
 import "./Topbar.css";
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
-import history from "../..//history";
+import {
+	NavLink,
+	useNavigate,
+	useLocation
+} from "react-router-dom";
+
 
 
 /**
@@ -11,6 +15,10 @@ const Topbar = () => {
 	const [login, setLogin] = useState(false);
 	console.log("user has logged_in", login);
 	
+	let navigate = useNavigate();
+
+	let currLoc = useLocation();
+	console.log(currLoc);
 
 	return (
 		<div className="topBar">
@@ -30,7 +38,7 @@ const Topbar = () => {
 					<ul className="pages">
 						<li className="topBarButton">
 							<NavLink
-								to="/home"
+								to="/"
 								className={({ isActive }) =>
 									isActive? "active" : "inactive"
 								}
@@ -96,7 +104,7 @@ const Topbar = () => {
 								className="topBarButton"
 								onClick={() => {
 									localStorage.clear();
-									history.push("/login");
+									navigate("/login");
 									window.location.reload();
 								}}
 							>

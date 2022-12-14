@@ -1,18 +1,18 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "./Sidebar.css";
-import { withRouter } from "react-router";
+// import { withRouter } from "react-router";
 
 export class Breadcrumb extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      stringlist: this.props.Match.url
-        .split("/")
-        .filter((value, index, arr) => {
-          return value !== "";
-        }),
+      // stringlist: this.props.Match.url
+      //   .split("/")
+      //   .filter((value, index, arr) => {
+      //     return value !== "";
+      //   }),
     };
 
     this.update = this.update.bind(this);
@@ -38,7 +38,7 @@ export class Breadcrumb extends Component {
   render() {
     return (
       <div className="breadcrumb">
-        {this.state.stringlist.map((string, string_id) => {
+        {/* {this.state.stringlist.map((string, string_id) => {
           // console.log(this.props.Match);
 
           if (string_id === this.state.stringlist.length - 1) {
@@ -58,10 +58,14 @@ export class Breadcrumb extends Component {
               </Link>
             );
           }
-        })}
+        })} */}
       </div>
     );
   }
 }
 
-export default withRouter(Breadcrumb);
+// ako nagcomment out nung withRouter to remove errors kasi deprecated na to sa react-router-v6
+// recreate it using useNavigate - lara
+
+// export default withRouter(Breadcrumb);
+export default Breadcrumb;
