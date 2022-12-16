@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router";
+// import { withRouter } from "react-router";
 import Sidebar from "../../components/sidebar/Sidebar";
 import TaxonomyHandler from "../../components/taxonomy_handler/TaxonomyHandler";
 
@@ -16,4 +16,8 @@ export class Taxonomy extends Component {
   }
 }
 
-export default withRouter(Taxonomy);
+// ako nagcomment out nung withRouter to remove errors kasi deprecated na to sa react-router-v6
+// recreate it using useNavigate - lara
+
+// export default withRouter(Taxonomy);
+export default Taxonomy;

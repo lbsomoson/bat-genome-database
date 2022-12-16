@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Sidebar from "../../components/sidebar/Sidebar";
 import StrainContent from "../../components/strain_content/StrainContent";
-import { withRouter } from "react-router";
+// import { withRouter } from "react-router";
 
 export class StrainDetail extends Component {
   render() {
@@ -16,4 +16,8 @@ export class StrainDetail extends Component {
   }
 }
 
-export default withRouter(StrainDetail);
+// ako nagcomment out nung withRouter to remove errors kasi deprecated na to sa react-router-v6
+// recreate it using useNavigate - lara
+
+// export default withRouter(StrainDetail);
+export default StrainDetail;

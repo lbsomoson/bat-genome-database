@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Sidebar from "../sidebar/Sidebar";
-import history from "../../history";
+// import history from "../../history";
 import "./TaxonomyHandler.css";
 import { withRouter } from "react-router-dom";
 import axios from "axios";
@@ -185,14 +185,18 @@ export class CategoryList extends Component {
                       <td>{category.id}</td>
                       <td
                         className="row_name"
-                        onClick={() =>
-                          history.push(
-                            "/taxonomy/"
-                              .concat(this.props.Category.toLowerCase())
-                              .concat("/")
-                              .concat(category.id)
-                          )
-                        }
+                        // ako nagcomment out nung onClick para matanggal error kasi di pa nacoconvert eto to functional component
+                        // use useNavigate from react router v6 to replace history pag naconvert na yung file - lara
+
+                        // onClick={() =>
+                          
+                        //   history.push(
+                        //     "/taxonomy/"
+                        //       .concat(this.props.Category.toLowerCase())
+                        //       .concat("/")
+                        //       .concat(category.id)
+                        //   )
+                        // }
                       >
                         {category.category_name}
                       </td>
@@ -229,4 +233,8 @@ export class CategoryList extends Component {
   }
 }
 
-export default withRouter(CategoryList);
+// ako nagcomment out nung withRouter to remove errors kasi deprecated na to sa react-router-v6
+// recreate it using useNavigate - lara
+
+// export default withRouter(CategoryList);
+export default CategoryList;

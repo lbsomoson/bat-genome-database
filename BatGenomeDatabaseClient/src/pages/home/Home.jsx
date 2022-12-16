@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./Home.css";
 import Sidebar from "../../components/sidebar/Sidebar";
-import { withRouter } from "react-router";
+// import { withRouter } from "react-router";
 
 export class Home extends Component {
   render() {
@@ -16,4 +16,8 @@ export class Home extends Component {
   }
 }
 
-export default withRouter(Home);
+// ako nagcomment out nung withRouter to remove errors kasi deprecated na to sa react-router-v6
+// recreate it using useNavigate - lara
+
+// export default withRouter(Home);
+export default Home;

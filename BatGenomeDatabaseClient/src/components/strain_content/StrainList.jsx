@@ -2,7 +2,7 @@
 import "./StrainContent.css";
 
 import React, { Component } from "react";
-import history from "../..//history";
+// import history from "../..//history";
 import axios from "axios";
 
 export default class StrainList extends Component {
@@ -131,7 +131,11 @@ export default class StrainList extends Component {
                   <td>{strain.id}</td>
                   <td
                     className="row_name"
-                    onClick={() => history.push("/strain/".concat(strain.id))}
+
+                    // ako nagcomment out nung onClick para matanggal error kasi di pa nacoconvert eto to functional component
+                    // use useNavigate from react router v6 to replace history pag naconvert na yung file - lara
+
+                    // onClick={() => history.push("/strain/".concat(strain.id))}
                   >
                     {strain.strain_name}
                   </td>
