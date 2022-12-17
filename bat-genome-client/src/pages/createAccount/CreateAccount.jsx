@@ -1,5 +1,8 @@
 import { useState } from "react";
 
+// For input validation
+import { useForm } from "react-hook-form";
+
 // Import MUI components
 import {
 	ThemeProvider,
@@ -21,7 +24,11 @@ import { GroupWork, Visibility, VisibilityOff } from "@mui/icons-material";
 // Import Styles
 import "./createAccount.css";
 
+// Import error messages
+import { errorMsgs } from "./errors";
+
 export default function CreateAccount() {
+	// States to toggle password visibility
 	const [showPassword, setShowPassword] = useState(false);
 	const [showConfirmPass, setShowConfirmPass] = useState(false);
 
@@ -31,6 +38,20 @@ export default function CreateAccount() {
 
 	const toggleConfirmPass = () => {
 		setShowConfirmPass(!showConfirmPass);
+	};
+
+	// For input validation
+	const {
+		register,
+		handleSubmit,
+		watch,
+		formState: { errors },
+	} = useForm();
+
+	// Submit data
+	const onSubmit = (data) => {
+		console.log(data);
+		alert("Clicked Create Account button!");
 	};
 
 	return (
@@ -67,28 +88,88 @@ export default function CreateAccount() {
 					{/* Form */}
 					<Grid container spacing={2}>
 						<Grid item md={6}>
-							<TextField label="Name" variant="outlined" fullWidth />
+							<TextField
+								required
+								label="Name"
+								name="name"
+								variant="outlined"
+								fullWidth
+								{...register("name", {
+									required: errorMsgs.name.required,
+								})}
+								error={!!errors?.name}
+								helperText={errors?.name ? errors.name.message : ""}
+							/>
 						</Grid>
 
 						<Grid item md={6}>
-							<TextField label="Username" variant="outlined" fullWidth />
+							<TextField
+								required
+								label="Username"
+								variant="outlined"
+								fullWidth
+								{...register("username", {
+									required: errorMsgs.username.required,
+								})}
+								error={!!errors?.username}
+								helperText={errors?.username ? errors.username.message : ""}
+							/>
 						</Grid>
 
-						{/* TODO: Add validation */}
 						<Grid item md={6}>
-							<TextField label="Email" variant="outlined" fullWidth type="email" />
+							<TextField
+								required
+								label="Email"
+								variant="outlined"
+								fullWidth
+								type="email"
+								{...register("email", {
+									required: errorMsgs.email.required,
+									pattern: {
+										value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+										message: errorMsgs.email.invalid,
+									},
+								})}
+								error={!!errors?.email}
+								helperText={errors?.email ? errors.email.message : ""}
+							/>
 						</Grid>
 
 						<Grid item md={6}>
-							<TextField label="Phone Number" variant="outlined" fullWidth />
-						</Grid>
-
-						<Grid item md={12}>
-							<TextField label="Address" variant="outlined" fullWidth />
+							<TextField
+								required
+								label="Phone Number"
+								variant="outlined"
+								fullWidth
+								{...register("phoneNum", {
+									required: errorMsgs.phone.required,
+									pattern: {
+										value: /^(09|\+639)\d{9}$/,
+										message: errorMsgs.phone.invalid,
+									},
+								})}
+								error={!!errors?.phoneNum}
+								helperText={errors?.phoneNum ? errors.phoneNum.message : ""}
+							/>
 						</Grid>
 
 						<Grid item md={12}>
 							<TextField
+								required
+								label="Address"
+								variant="outlined"
+								fullWidth
+								{...register("address", {
+									required: errorMsgs.address.required,
+								})}
+								error={!!errors?.address}
+								helperText={errors?.address ? errors.address.message : ""}
+							/>
+						</Grid>
+
+						<Grid item md={12}>
+							<TextField
+								required
 								label="Password"
 								variant="outlined"
 								fullWidth
@@ -102,11 +183,21 @@ export default function CreateAccount() {
 										</InputAdornment>
 									),
 								}}
+								{...register("password", {
+									required: errorMsgs.password.required,
+									pattern: {
+										value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$$/,
+										message: errorMsgs.password.invalid,
+									},
+								})}
+								error={!!errors?.password}
+								helperText={errors?.password ? errors.password.message : ""}
 							/>
 						</Grid>
 
 						<Grid item md={12}>
 							<TextField
+								required
 								label="Confirm Password"
 								variant="outlined"
 								fullWidth
@@ -120,13 +211,29 @@ export default function CreateAccount() {
 										</InputAdornment>
 									),
 								}}
+								{...register("confirmPass", {
+									required: errorMsgs.confirmPass.required,
+									validate: (value) => {
+										if (watch("password") != value) {
+											return errorMsgs.confirmPass.invalid;
+										}
+									},
+								})}
+								error={!!errors?.confirmPass}
+								helperText={errors?.confirmPass ? errors.confirmPass.message : ""}
 							/>
 						</Grid>
 					</Grid>
 
 					{/* Button */}
 					<Box className="buttonDiv">
-						<Button variant="contained" fullWidth sx={{ padding: "10px" }}>
+						<Button
+							type="submit"
+							variant="contained"
+							fullWidth
+							sx={{ padding: "10px" }}
+							onClick={handleSubmit(onSubmit)}
+						>
 							Create Account
 						</Button>
 						<Typography color="primary.gray" sx={{ marginTop: "10px" }}>
