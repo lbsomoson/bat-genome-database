@@ -11,6 +11,12 @@ export const theme = createTheme({
 			gray: "#a8a8a8",
 			white: "#f8f8f8",
 		},
+		white: {
+			main: "#f8f8f8",
+		},
+		gray: {
+			main: "#a8a8a8",
+		},
 	},
 
 	typography: {
