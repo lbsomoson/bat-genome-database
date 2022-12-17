@@ -1,24 +1,45 @@
-import { ThemeProvider, Typography, Box, TextField, Button, Grid } from "@mui/material";
+import { useState } from "react";
+
+// Import MUI components
+import {
+	ThemeProvider,
+	Typography,
+	Box,
+	TextField,
+	Button,
+	Grid,
+	InputAdornment,
+	IconButton,
+} from "@mui/material";
 
 // Import theme
 import { theme } from "../../theme";
 
 // Import Icons
-import GroupWorkIcon from "@mui/icons-material/GroupWork";
-/* import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff"; */
+import { GroupWork, Visibility, VisibilityOff } from "@mui/icons-material";
 
 // Import Styles
 import "./createAccount.css";
 
 export default function CreateAccount() {
+	const [showPassword, setShowPassword] = useState(false);
+	const [showConfirmPass, setShowConfirmPass] = useState(false);
+
+	const togglePassword = () => {
+		setShowPassword(!showPassword);
+	};
+
+	const toggleConfirmPass = () => {
+		setShowConfirmPass(!showConfirmPass);
+	};
+
 	return (
 		<ThemeProvider theme={theme}>
 			<Box className="mainDiv" bgcolor="primary.white">
 				{/* Left Side */}
 				<Box bgcolor="primary.main" className="leftDiv">
 					<Box className="pageName">
-						<GroupWorkIcon color="white" sx={{ width: "70px", height: "70px" }} />
+						<GroupWork color="white" sx={{ width: "70px", height: "70px" }} />
 						<Typography
 							color="primary.white"
 							sx={{ fontSize: "40px", fontWeight: " 700", letterSpacing: "0.15px", lineHeight: "44px" }}
@@ -55,7 +76,7 @@ export default function CreateAccount() {
 
 						{/* TODO: Add validation */}
 						<Grid item md={6}>
-							<TextField label="Email" variant="outlined" fullWidth />
+							<TextField label="Email" variant="outlined" fullWidth type="email" />
 						</Grid>
 
 						<Grid item md={6}>
@@ -67,11 +88,39 @@ export default function CreateAccount() {
 						</Grid>
 
 						<Grid item md={12}>
-							<TextField label="Password" variant="outlined" fullWidth />
+							<TextField
+								label="Password"
+								variant="outlined"
+								fullWidth
+								type={showPassword ? "text" : "password"}
+								InputProps={{
+									endAdornment: (
+										<InputAdornment position="end">
+											<IconButton onClick={togglePassword}>
+												{showPassword ? <Visibility /> : <VisibilityOff />}
+											</IconButton>
+										</InputAdornment>
+									),
+								}}
+							/>
 						</Grid>
 
 						<Grid item md={12}>
-							<TextField label="Confirm Password" variant="outlined" fullWidth />
+							<TextField
+								label="Confirm Password"
+								variant="outlined"
+								fullWidth
+								type={showConfirmPass ? "text" : "password"}
+								InputProps={{
+									endAdornment: (
+										<InputAdornment position="end">
+											<IconButton onClick={toggleConfirmPass}>
+												{showConfirmPass ? <Visibility /> : <VisibilityOff />}
+											</IconButton>
+										</InputAdornment>
+									),
+								}}
+							/>
 						</Grid>
 					</Grid>
 
