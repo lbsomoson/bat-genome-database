@@ -1,0 +1,56 @@
+.main {
+  padding: 25px 100px;
+}
+
+body {
+  font-family: 'Inter var', sans-serif;
+}
+
+h1 {
+  color: #3E99C0;
+  font-weight: bold;
+  line-height: 1%;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-content: space-around;
+  row-gap: 15px;
+}
+
+.item {
+  display: flex;
+}
+
+.left {
+  width: 20%;
+}
+
+.right {
+  width: 80%;
+}
+
+.topText {
+  display: flex;
+  flex: 40%;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  align-items: center;
+}
+
+.topRight {
+  display: flex;  
+}
+
+.topLeft {
+  flex: 60%;
+}
+
+.topRight Button {
+  flex: 50%;
+  margin-left: 15px;
+  display: 'inline-block';
+}
+
+
