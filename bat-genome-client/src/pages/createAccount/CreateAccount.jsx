@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 // For input validation
 import { useForm } from "react-hook-form";
@@ -28,6 +29,9 @@ import "./createAccount.css";
 import { errorMsgs } from "./errors";
 
 export default function CreateAccount() {
+	// Navigation
+	const navigate = useNavigate();
+
 	// States to toggle password visibility
 	const [showPassword, setShowPassword] = useState(false);
 	const [showConfirmPass, setShowConfirmPass] = useState(false);
@@ -242,6 +246,9 @@ export default function CreateAccount() {
 								display="inline"
 								color="primary.main"
 								sx={{ margin: "0 4px", fontWeight: "500", cursor: "pointer" }}
+								onClick={() => {
+									navigate("/login");
+								}}
 							>
 								Login.
 							</Typography>
