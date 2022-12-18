@@ -1,0 +1,46 @@
+.mainDiv {
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+
+.pageName {
+	display: inline-flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 12px;
+}
+
+.wholeDiv {
+    max-height: 400px;
+	display: inline-flex;
+	flex-direction: column;
+    align-items: center;
+	flex-basis: 870px;
+    margin: 0 auto;
+    margin-top: 80px;
+    max-width: 550px;
+}
+
+.bottomDiv {
+    margin-top: 60px;
+    padding: 20px 110px;
+	display: inline-flex;
+	flex-direction: column;
+    align-items: center;
+    border-radius: 25px;
+}
+
+.buttonDiv {
+	margin-top: 40px;
+	margin-bottom: 20px;
+	display: inline-flex;
+	flex-direction: column;
+    width: 100%;
+}
+
+@media only screen and (max-width: 800px) {
+	.mainDiv {
+		flex-direction: column;
+	}
+}
