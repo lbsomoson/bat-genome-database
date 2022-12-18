@@ -1,0 +1,51 @@
+.homeDiv {
+    width: 100%;
+	display: flex;
+	flex-direction: column;
+    flex-grow: 2;
+    height: 100%;
+}
+
+.pageName {
+	display: inline-flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 12px;
+    margin-top: 80px;
+}
+
+.aboutInfo {
+    width: 80%;
+	display: inline-flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 12px;
+}
+
+.aboutDiv {
+    display: inline-flex;
+    flex-direction: column;
+    flex-grow: 2;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.graphDiv {
+    margin: 0 auto;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.viewButton {
+    margin-top: 20px;
+	display: inline-flex;
+	flex-direction: column;
+}
+
+@media only screen and (max-width: 800px) {
+	.mainDiv {
+		flex-direction: column;
+	}
+}
