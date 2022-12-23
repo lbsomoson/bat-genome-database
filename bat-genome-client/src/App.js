@@ -1,32 +1,47 @@
+/* Router and Context */
 import { Outlet, BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { UserDetailsProvider } from "./context/UserDetailsProvider";
 
-// Import components and pages
-import { Topbar } from "./components/index";
-import { Login, CreateAccount, Home, ViewStrain, AddStrain, ManageUsers } from "./pages/index";
+/* Components */
+import {
+	Topbar
+} from "./components/index";
+
+/* Pages */
+import {
+	AddStrain,
+	CreateAccount,
+	Home,
+	Login,
+	ManageUsers,
+	ViewStrain
+} from "./pages/index";
+
 
 /**
- * Function that will set the common layout for all pages (except login and create account page)
+ * This will set the common layout for all pages (except login and create account page)
  */
 function Layout() {
 	return (
-		<>
-			<nav>
-				<Topbar />
-			</nav>
+		<UserDetailsProvider>	
+			<nav><Topbar /></nav>
 			<Outlet />
-		</>
+		</UserDetailsProvider>
 	);
 }
 
+/**
+ * Main function for App.jsx
+ */
 export default function App() {
 	return (
 		<Router>
 			<Routes>
-				{/* Login and Create Account page do not have topbars */}
+				{/* Login and Create Account page do not have the topbar */}
 				<Route path="/login" element={<Login />} />
 				<Route path="/createaccount" element={<CreateAccount />} />
 
-				{/* Pages with topbars */}
+				{/* Pages with topbar */}
 				<Route path="/" element={<Layout />}>
 					<Route index element={<Home />} />
 					<Route path="view/strain" element={<ViewStrain />} />
