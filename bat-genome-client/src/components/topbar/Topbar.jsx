@@ -8,7 +8,8 @@ import { NavLink } from "react-router-dom";
 import {
 	useContext,
 	useEffect,
-	useState
+	useRef,
+	useState,
 } from "react";
 
 /* Material UI */
@@ -35,8 +36,8 @@ const pages = [
 	{ text: 'Manage Users', href: '/users' },
 	{ text: 'Login', href: '/login' },
 	{ text: 'Create Account', href: '/createaccount' },
-	// { text: 'Logout', href: '/' }
 ];
+
 const settings = [
 	{ text: 'Profile', href: '/profile' },
 	{ text: 'Logout', href: '/' }
@@ -50,11 +51,12 @@ const settings = [
 const TopBar = () => {
 	const [userDetails, setUserDetails] = useContext(userDetailsContext);
   const [anchorUser, setAnchorUser] = useState(null);
+	const anchorRef = useRef();
 
 	// for testing with a logged in account
 	// useEffect(() => {
 	// 	setUserDetails({
-	// 		user: 'Lara',
+	// 		user: 'Sample User',
 	// 		role: 'admin'
 	// 	})
 	
@@ -73,7 +75,7 @@ const TopBar = () => {
 		<Menu
 			sx={{ mt: '45px' }}
 			id="menu-appbar"
-			anchorEl={anchorUser}
+			anchorEl={anchorRef.current}
 			anchorOrigin={{
 				vertical: 'top',
 				horizontal: 'right',
@@ -101,20 +103,20 @@ const TopBar = () => {
 					excluded.includes(page.text) ?
 						<></>
 						: <Button
-							key={idx}
-							variant="text"
-							sx={{ fontSize:'16px', mx:2 }}
-						>
-							<NavLink
-								style={({ isActive }) =>
-									isActive ? { fontWeight: '900', textDecoration: 'none', color: "white" }
-										: { fontWeight: '400', textDecoration: 'none', color: "white" }
-								}
-								to={page.href}
+								key={idx}
+								variant="text"
+								sx={{ fontSize:'16px', mx:2 }}
 							>
-								{page.text}
-							</NavLink>
-						</Button>
+							<NavLink
+									to={page.href}
+									style={({ isActive }) =>
+										isActive ? { fontWeight: '900', textDecoration: 'none', color: "white" }
+											: { fontWeight: '400', textDecoration: 'none', color: "white" }
+									}
+								>
+									{page.text}
+								</NavLink>
+							</Button>
 				))}
 			</>
 		)
@@ -138,7 +140,6 @@ const TopBar = () => {
 						</Typography>
 
 						<Box sx={{ flexGrow: 1 }} />
-
 						<Box sx={{ display: { xs: 'none', md: 'flex' } }}>
 							{userDetails != null ?
 									userDetails.role === "admin" ?
@@ -157,11 +158,14 @@ const TopBar = () => {
 										aria-haspopup="true"
 										onClick={handleOpenProfileMenu}
 										color="inherit"
+										ref={anchorRef}
 									>
 										<AccountCircle />
 									</IconButton>
 								</Tooltip>
 							}
+
+							{renderProfileMenu}
 						</Box>
 					</Toolbar>
 				</Container>
