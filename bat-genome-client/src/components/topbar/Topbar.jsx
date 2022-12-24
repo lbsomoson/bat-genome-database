@@ -45,13 +45,16 @@ const pages = [
  */
 const TopBar = () => {
 	const [userDetails, setUserDetails] = useContext(userDetailsContext);
-	
+
 	const [anchorUser, setAnchorUser] = useState(null);
 	const [anchorNav, setAnchorNav] = useState(null);
   
 	const anchorRef = useRef();
 
-	// -----for testing with a logged in account
+	/**
+	 *  -----for testing with a logged in account
+	 * initial state will show that an account is logged in
+	 */ 
 	useEffect(() => {
 		setUserDetails({
 			user: 'Sample User',
@@ -63,7 +66,10 @@ const TopBar = () => {
 	// eslint-disable-next-line
 	}, []);
 
-  const handleOpenProfileMenu = (event) => {
+	/**
+	 * Handlers for opening and closing of the user account and mobile navigation menu
+	 */
+  const handleOpenAccountMenu = (event) => {
     setAnchorUser(event.currentTarget);
   };
 	
@@ -75,14 +81,20 @@ const TopBar = () => {
     setAnchorNav(null);
 	};
 	
-	const handleCloseProfileMenu = () => {
+	const handleCloseAccountMenu = () => {
     setAnchorUser(null);
 	};
 
+	/**
+	 * Handler for user account logout event
+	 */
 	const handleLogout = () => {
 		setUserDetails(null);
 	}
 	
+	/**
+	 * Renders desktop navigation pages based on user role
+	 */
 	const renderNavPages = (excluded) => {
 		return (
 			<>
@@ -109,6 +121,9 @@ const TopBar = () => {
 		)
 	}
 
+	/**
+	 * Renders mobile navigation pages based on user role
+	 */
 	const renderMobilePages = (excluded) => {
 		return (
 			<div>
@@ -136,6 +151,7 @@ const TopBar = () => {
 
 						{/* -----Mobile View----- */}
 						<Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+							{/* Menu Burger Icon */}
 							<IconButton
 								size="large"
 								aria-controls="nav-mobile-appbar"
@@ -146,6 +162,7 @@ const TopBar = () => {
 								<MenuRounded />
 							</IconButton>
 							
+							{/* Menu for navigation pages */}
 							<Menu
 								id="pages-mobile"
 								anchorEl={anchorNav}
@@ -159,7 +176,6 @@ const TopBar = () => {
 									horizontal: 'left',
 								}}
 								open={Boolean(anchorNav)}
-								onClose={handleCloseNavMenu}
 								sx={{ display: { xs: 'block', md: 'none' } }}
 							>
 								{userDetails != null ?
@@ -170,6 +186,8 @@ const TopBar = () => {
 								}
 							</Menu>
 						</Box>
+
+						{/* App Name */}
 						<Typography
 							variant="h6"
 							noWrap
@@ -185,6 +203,7 @@ const TopBar = () => {
 						{/* ----- */}
 
 						{/* -----Desktop View----- */}
+						{/* App Name */}
 						<Typography
 							noWrap
 							component="div"
@@ -196,8 +215,9 @@ const TopBar = () => {
 						>
 							Bat Genome Database
 						</Typography>
-
 						<Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }} />
+
+						{/* Navigation Pages */}
 						<Box sx={{ display: { xs: 'none', md: 'flex' } }}>
 							{userDetails != null ?
 									userDetails.role === "admin" ?
@@ -209,6 +229,7 @@ const TopBar = () => {
 						{/* ----- */}
 
 						<Box>
+							{/* User Icon */}
 							{userDetails == null ?
 								null
 								: <Tooltip title="Open settings">
@@ -217,7 +238,7 @@ const TopBar = () => {
 										edge="end"
 										aria-label="account of current user"
 										aria-haspopup="true"
-										onClick={handleOpenProfileMenu}
+										onClick={handleOpenAccountMenu}
 										color="inherit"
 										ref={anchorRef}
 									>
@@ -226,6 +247,7 @@ const TopBar = () => {
 								</Tooltip>
 							}
 
+							{/* User Account Menu */}
 							<Menu
 								id="menu-appbar"
 								anchorEl={anchorRef.current}
@@ -239,14 +261,13 @@ const TopBar = () => {
 									horizontal: 'right',
 								}}
 								open={Boolean(anchorUser)}
-								onClose={handleCloseProfileMenu}
 								sx={{ mt: '34px' }}
 							>
 								<MenuItem
 									component={NavLink}
 									// to='/profile'
 									onClick={() => {
-										handleCloseProfileMenu();
+										handleCloseAccountMenu();
 									}}
 								>
 									Profile
@@ -255,7 +276,7 @@ const TopBar = () => {
 									component={NavLink}
 									to='/'
 									onClick={() => {
-										handleCloseProfileMenu();
+										handleCloseAccountMenu();
 										handleLogout();
 									}}
 								>
