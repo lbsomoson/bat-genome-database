@@ -1,0 +1,15 @@
+h1 {
+  color: #3E99C0;
+  font-weight: bold;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.label {
+  color: #7B7979;
+  font-size: 16px;
+}

@@ -10,6 +10,7 @@ export const theme = createTheme({
 			black: "#000000",
 			gray: "#a8a8a8",
 			white: "#f8f8f8",
+			grey: "#7B7979",
 		},
 	},
 
