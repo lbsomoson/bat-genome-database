@@ -14,7 +14,8 @@ import {
 	Home,
 	Login,
 	ManageUsers,
-	ViewStrain
+	ViewStrain,
+	ViewSpecificStrain
 } from "./pages/index";
 
 
@@ -45,6 +46,7 @@ export default function App() {
 				<Route path="/" element={<Layout />}>
 					<Route index element={<Home />} />
 					<Route path="view/strain" element={<ViewStrain />} />
+					<Route path="view/specificstrain" element={<ViewSpecificStrain />} />
 					<Route path="add/strain" element={<AddStrain />} />
 					<Route path="users" element={<ManageUsers />} />
 				</Route>
