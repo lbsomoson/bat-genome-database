@@ -1,30 +1,31 @@
 /* Router and Context */
 import { Outlet, BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { UserDetailsProvider } from "./utils/UserDetailsProvider";
+import { UserDetailsProvider } from "./context/UserDetailsProvider";
 
 /* Components */
-import {
-	Topbar
-} from "./components/index";
+import { Topbar } from "./components/index";
 
 /* Pages */
 import {
 	AddStrain,
+	EditStrain,
 	CreateAccount,
 	Home,
 	Login,
 	ManageUsers,
-	ViewStrain
+	ViewStrain,
+	ViewSpecificStrain,
 } from "./pages/index";
-
 
 /**
  * This will set the common layout for all pages (except login and create account page)
  */
 function Layout() {
 	return (
-		<UserDetailsProvider>	
-			<nav><Topbar /></nav>
+		<UserDetailsProvider>
+			<nav>
+				<Topbar />
+			</nav>
 			<Outlet />
 		</UserDetailsProvider>
 	);
@@ -45,7 +46,9 @@ export default function App() {
 				<Route path="/" element={<Layout />}>
 					<Route index element={<Home />} />
 					<Route path="view/strain" element={<ViewStrain />} />
+					<Route path="view/specificstrain" element={<ViewSpecificStrain />} />
 					<Route path="add/strain" element={<AddStrain />} />
+					<Route path="edit/strain" element={<EditStrain />} />
 					<Route path="users" element={<ManageUsers />} />
 				</Route>
 			</Routes>

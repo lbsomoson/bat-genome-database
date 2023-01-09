@@ -12,9 +12,9 @@ import { ArrowBack } from "@mui/icons-material";
 
 import { theme } from "../../theme";
 import { useState } from "react";
-import "./AddStrain.css";
+/* import "./AddStrain.css"; */
 
-export default function AddStrain() {
+export default function EditStrain() {
 	const [values, setValues] = useState({
 		scientificName: "",
 		collectionNumber: "",
@@ -121,7 +121,7 @@ export default function AddStrain() {
 			<Box className="main">
 				<ArrowBack />
 				<Box mt={5} mb={5}>
-					<h1>Add Strain</h1>
+					<h1>Edit Strain</h1>
 				</Box>
 				{/* Form */}
 				<Grid container rowSpacing={2} columnSpacing={3}>
