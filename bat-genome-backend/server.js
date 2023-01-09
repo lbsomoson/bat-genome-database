@@ -23,7 +23,7 @@ app.use(express.urlencoded({ extended:true }));
 // Allow CORS
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", uri.frontend);
-  res.setHeader("Access-Control-Allow-Methods", "POST");
+  res.setHeader("Access-Control-Allow-Methods", "POST, PUT");
   res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers,Access-Control-Allow-Methods,Origin,Accept,Content-Type");
   res.setHeader("Access-Control-Allow-Authorization",true);
   next();

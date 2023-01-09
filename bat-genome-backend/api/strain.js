@@ -63,9 +63,11 @@ exports.editStrain = async (req,res) => {
 		const item = await strain.findById(req.params.id);
 		Object.assign(item, req.body);
 		item.save();
-		res.send({ success:true })
+		res.status(200);
+		res.send({ "success": true });
     
 	} catch(err) {
+		console.log(err)
 		res.status(500);
 		res.send("Internal server error");
 		console.error("Failed to update a document.");    

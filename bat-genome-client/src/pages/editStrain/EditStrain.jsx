@@ -9,24 +9,30 @@ import {
 	MenuItem,
 } from "@mui/material";
 import { ArrowBack } from "@mui/icons-material";
-
+import { useNavigate, useLocation } from "react-router-dom";
 import { theme } from "../../theme";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { putFetch } from "../../utils/apiRequest.js";
 /* import "./AddStrain.css"; */
 
+// TODO:
+// Add snackbar notif(?)
+// Check for changes
+
 export default function EditStrain() {
+	const [isDisabled, setIsDisabled]= useState(true);
+	const [currentState, setCurrentState]= useState({});
 	const [values, setValues] = useState({
+		strainID: "",
 		scientificName: "",
-		collectionNumber: "",
 		strainDesignation: "",
 		strainType: "",
-		variant: "",
 		domain: "",
 		phylum: "",
 		order: "",
 		family: "",
 		genus: "",
-		species: "",
+		species: ""
 
 		/* name: "",
 		scientificName: "",
@@ -50,14 +56,14 @@ export default function EditStrain() {
 		{ value: "specie-5", text: "Specie 5" },
 	]; */
 
+	const { state } = useLocation();
+	const navigate = useNavigate();
 	// For input of types text or select
 	const handleChange = (e) => {
 		setValues({
 			...values,
 			[e.target.name]: e.target.value,
 		});
-
-		console.log(values);
 	};
 
 	// For input of type combobox
@@ -116,6 +122,41 @@ export default function EditStrain() {
 
 	// TODO: read file contents
 
+	useEffect(() => {
+		setValues({...values, ...state})
+		
+	  }, []);
+
+	
+	// Handles PUT request for strain creation
+	const handleEditStrain = async() => {
+		
+		// Object to be added to DB
+		let newStrain = {
+			strainID: values.id.toString(),
+			scientificName: values.scientificName.charAt(0).toUpperCase() + values.scientificName.slice(1),
+			strainDesignation: values.strainDesignation,
+			strainType: values.strainType,
+			domain: values.domain.charAt(0).toUpperCase() + values.domain.slice(1),
+			phylum: values.phylum.charAt(0).toUpperCase() + values.phylum.slice(1),
+			order: values.order.charAt(0).toUpperCase() + values.order.slice(1),
+			family: values.family.charAt(0).toUpperCase() + values.family.slice(1),
+			genus: values.genus.charAt(0).toUpperCase() + values.genus.slice(1),
+			species: values.species,
+		};
+
+		// Perform POST request
+		putFetch('http://localhost:3001/strains/'+ values.id, newStrain).then((res) => {
+			// Checking if the action is successful
+			if (!res) {
+				console.error("Strain not added");
+			} else {
+				console.log("Strain successfully added");
+				navigate("/view/strain");
+			};
+		})
+	}
+
 	return (
 		<ThemeProvider theme={theme}>
 			<Box className="main">
@@ -137,10 +178,10 @@ export default function EditStrain() {
 					</Grid>
 					<Grid item md={6}>
 						<TextField
-							label="Collection Number"
-							name="collectionNumber"
+							label="Strain ID"
+							name="strainID"
 							variant="outlined"
-							value={values.collectionNumber}
+							value={values.strainID}
 							onChange={handleChange}
 							fullWidth
 						/>
@@ -161,16 +202,6 @@ export default function EditStrain() {
 							name="strainType"
 							variant="outlined"
 							value={values.strainType}
-							onChange={handleChange}
-							fullWidth
-						/>
-					</Grid>
-					<Grid item md={4}>
-						<TextField
-							label="Variant"
-							name="variant"
-							variant="outlined"
-							value={values.variant}
 							onChange={handleChange}
 							fullWidth
 						/>
@@ -238,16 +269,26 @@ export default function EditStrain() {
 					</Grid>
 
 					<Grid item md={6}>
-						<Button variant="outlined" sx={{ padding: "10px" }} fullWidth>
+						<Button 
+							variant="outlined" 
+							sx={{ padding: "10px" }} 
+							onClick={()=> navigate("/view/strain")} 
+							fullWidth
+						>
 							CANCEL
 						</Button>{" "}
-						{/*TODO: cancel*/}
 					</Grid>
 					<Grid item md={6}>
-						<Button variant="contained" sx={{ padding: "10px" }} fullWidth>
-							ADD STRAIN
+						<Button 
+							variant="contained" 
+							sx={{ padding: "10px" }}
+							onClick={handleEditStrain}
+							disabled={isDisabled}
+							fullWidth
+						>
+							SAVE CHANGES
 						</Button>{" "}
-						{/*TODO: onlick*/}
+
 					</Grid>
 				</Grid>
 			</Box>

@@ -22,12 +22,11 @@ import {
 import { theme } from "../../theme";
 
 
-
 const rows = [
 	{
 		id: 1,
 		name: "1",
-		sci_name: "Cistugo",
+		scientificName: "Cistugo",
 		common_name: "Lesueur's Wing-gland Bat",
 		domain: "Eukaryote",
 		kingdom: "Animal",
@@ -36,7 +35,7 @@ const rows = [
 	{
 		id: 2,
 		name: "2",
-		sci_name: "Cistugo",
+		scientificName: "Cistugo",
 		common_name: "Angolan Wing-gland Bat",
 		domain: "Eukaryote",
 		kingdom: "Animal",
@@ -45,7 +44,7 @@ const rows = [
 	{
 		id: 3,
 		name: "3",
-		sci_name: "Craseonycteris",
+		scientificName: "Craseonycteris",
 		common_name: "Bumblebee Bat",
 		domain: "Eukaryote",
 		kingdom: "Animal",
@@ -54,7 +53,7 @@ const rows = [
 	{
 		id: 4,
 		name: "4",
-		sci_name: "Balantiopteryx",
+		scientificName: "Balantiopteryx",
 		common_name: "Ecuadorian Sac-winged Bat",
 		domain: "Eukaryote",
 		kingdom: "Animal",
@@ -63,7 +62,7 @@ const rows = [
 	{
 		id: 5,
 		name: "5",
-		sci_name: "Balantiopteryx",
+		scientificName: "Balantiopteryx",
 		common_name: "Thomas's Sac-winged Bat",
 		domain: "Eukaryote",
 		kingdom: "Animal",
@@ -140,13 +139,13 @@ export default function ViewStrain() {
 		// 	  }
 		// },
 		{
-			field: "name",
+			field: "id",
 			headerName: "ID",
 			minWidth: 200,
 			flex: 1,
 		},
 		{
-			field: "sci_name",
+			field: "scientificName",
 			headerName: "Scientific Name",
 			minwidth: 200,
 			flex: 1,
@@ -182,7 +181,11 @@ export default function ViewStrain() {
 			minWidth: 80,
 			getActions: (params) => [
 				<GridActionsCellItem icon={<Visibility color={"primary"} />} label="View User Details" />,
-				<GridActionsCellItem icon={<Edit color={"primary"} />} label="Edit" />,
+				<GridActionsCellItem 
+					icon={<Edit color={"primary"} />} 
+					onClick={() => { navigate("/edit/strain", {state: params.row});console.log(params)}} 
+					label="Edit" 
+				/>,
 				<GridActionsCellItem icon={<Delete color={"primary"} />} label="Delete" />,
 			],
 		},
