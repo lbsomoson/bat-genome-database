@@ -4,6 +4,7 @@
 */
 
 const strains = require('./api/strain.js');
+const users = require('./api/user.js');
 const uri = require('./uri.js');
 
 // Allow Cross Origin Resource Sharing (CORS) for the specified URL
@@ -20,4 +21,8 @@ module.exports = (app) => {
 	// STRAIN ROUTES
 	app.post('/strains', setCORSHeader, strains.addStrain);
 	app.put('/strains/:id',setCORSHeader, strains.editStrain);
+	
+	// USER ROUTES
+	app.post('/signup', setCORSHeader, users.signUp);
+	app.post('/login', setCORSHeader, users.login);
 }
