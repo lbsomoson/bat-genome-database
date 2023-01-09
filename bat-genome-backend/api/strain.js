@@ -29,7 +29,7 @@ exports.addStrain = async(req, res) => {
 
 	// Return 400 error code if a required field is missing or is empty
 	if(!(body				&&
-		body.strainID    &&
+		body.strainID	&&
 		body.domain		&&
 		body.phylum		&&
 		body.order		&&
@@ -37,7 +37,7 @@ exports.addStrain = async(req, res) => {
 		body.genus		&&
 		body.species	&&
 		body.scientificName)) {
-			res.status(400).send("You did something wrong");
+			res.status(400).send("Bad request");
 			return(0);
 	}
 
