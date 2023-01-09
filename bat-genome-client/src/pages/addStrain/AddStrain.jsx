@@ -107,10 +107,10 @@ export default function AddStrain() {
 
 	// TODO: read file contents
 
-	// Handles POST request for inventory item creation
+	// Handles POST request for strain creation
     const handleAddStrain = async() => {
 		
-        // Object to be added to inventory
+        // Object to be added to DB
         let newStrain = {
 			strainID: values.strainID.toUpperCase(),
 			scientificName: values.scientificName.charAt(0).toUpperCase() + values.scientificName.slice(1),
@@ -123,7 +123,6 @@ export default function AddStrain() {
 			genus: values.genus.charAt(0).toUpperCase() + values.genus.slice(1),
 			species: values.species,
         };
-		console.log(newStrain);
 
         // Perform POST request
         postFetch('http://localhost:3001/strains', newStrain).then((res) => {
@@ -133,7 +132,6 @@ export default function AddStrain() {
             } else {
 				console.log("Strain successfully added");
             };
-			// console.log(res)
         })
     }
 
