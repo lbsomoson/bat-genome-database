@@ -54,8 +54,35 @@ export default function CreateAccount() {
 
 	// Submit data
 	const onSubmit = (data) => {
-		console.log(data);
-		alert("Clicked Create Account button!");
+		const user = {
+			username: data.username,
+			name: data.name,
+			email: data.email,
+			phoneNumber: data.phoneNum,
+			address: data.address,
+			password: data.password,
+			role: "user",
+		  }
+
+		  // send a POSt request to localhost:3001/login
+		  fetch(
+			"http://localhost:3001/signUp",
+			{
+			  method: "POST",
+			  headers: {
+				"Content-Type": "application/json"
+			  },
+			  body: JSON.stringify(user)
+			})
+			.then(response => response.json())
+			.then(body => {
+			  // For other prompts
+				if (body.success) {
+				alert("Successfully saved");
+				navigate("/login");
+			  }
+			  else { alert("Failed to save user"); }
+			});
 	};
 
 	return (

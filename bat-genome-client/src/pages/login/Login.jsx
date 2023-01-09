@@ -42,8 +42,33 @@ export default function Login() {
 	
 		// Submit data
 		const onSubmit = (data) => {
-			console.log(data);
-			alert("Click login");
+			console.log(data)
+			const user = {
+				email: data.email,
+				password: data.password,
+			  }
+	
+			  // send a POSt request to localhost:3001/signUp
+			  fetch(
+				"http://localhost:3001/login",
+				{
+				  method: "POST",
+				  headers: {
+					"Content-Type": "application/json"
+				  },
+				  body: JSON.stringify(user)
+				})
+				.then(response => response.json())
+				.then(body => {
+				  // For other prompts
+				  if (body.success === "no exist") { alert("No matching email")}
+				  else if (body.success === "wrong") {alert("Wrong password")}
+				  else if (body.success) {
+					alert("Successfully login");
+					navigate("/");
+				  }
+				  else { alert("Failed"); }
+				});
 		};
 	return (
 		<ThemeProvider theme={theme}>
