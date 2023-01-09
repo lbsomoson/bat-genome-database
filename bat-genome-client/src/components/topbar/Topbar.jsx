@@ -7,7 +7,7 @@ import { NavLink } from "react-router-dom";
 import { useContext, useEffect, useRef, useState } from "react";
 
 /* Material UI */
-import { AccountCircle, MenuRounded } from "@mui/icons-material";
+import { AccountCircle, GroupWork, MenuRounded } from "@mui/icons-material";
 import {
 	AppBar,
 	Box,
@@ -186,6 +186,7 @@ const TopBar = () => {
 
 						{/* -----Desktop View----- */}
 						{/* App Name */}
+						<GroupWork color="white" sx={{ width: { xs:"", md:"50px" }  }} />
 						<Typography
 							noWrap
 							component="div"
