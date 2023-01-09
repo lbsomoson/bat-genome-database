@@ -4,6 +4,16 @@ import Home from "./home/Home";
 import ViewStrain from "./viewStrain/ViewStrain";
 import ViewSpecificStrain from "./viewSpecificStrain/ViewSpecificStrain";
 import AddStrain from "./addStrain/AddStrain";
+import EditStrain from "./editStrain/EditStrain";
 import ManageUsers from "./manageUsers/ManageUsers";
 
-export { Login, CreateAccount, Home, ViewStrain, ViewSpecificStrain, AddStrain, ManageUsers };
+export {
+	Login,
+	CreateAccount,
+	Home,
+	ViewStrain,
+	ViewSpecificStrain,
+	AddStrain,
+	EditStrain,
+	ManageUsers,
+};

@@ -231,12 +231,12 @@ export default function ViewStrain() {
 			minwidth: 200,
 			flex: 1,
 		},
-		{
+		/* {
 			field: "common_name",
 			headerName: "Common Name",
 			minWidth: 110,
 			flex: 1,
-		},
+		}, */
 		{
 			field: "domain",
 			headerName: "Domain",

@@ -1,12 +1,24 @@
 import { ThemeProvider, Typography, Box, Button, Breadcrumbs } from "@mui/material";
-import { ArrowBack, Edit, FileDownload, Link } from '@mui/icons-material';
+import { ArrowBack, Edit, FileDownload, Link } from "@mui/icons-material";
 import { theme } from "../../theme";
 
 import "./ViewSpecificStrain.css";
 
 const detail = {
 	scientificName: "Abditibacterium utsteinense",
-	commonName: "Common Name",
+
+	collectionNumber: "Collection Number",
+	strainDesignation: "Strain Designation",
+	strainType: "Strain Type",
+	variant: "Variant",
+	domain: "Domain",
+	phylum: "Phylum",
+	order: "Order",
+	family: "Family",
+	genus: "Genus",
+	species: "Species",
+
+	/* commonName: "Common Name",
 	domain: "Domain",
 	kingdom: "Kingdom",
 	phylum: "Phylum",
@@ -16,15 +28,14 @@ const detail = {
 	temperatureRange: "Temperature Range",
 	referenceList: "Reference List",
 	species: "Species",
-	typeStrain: "Type Strain",
-}
+	typeStrain: "Type Strain", */
+};
 
 export default function ViewSpecificStrain() {
-
 	function handleClick(event) {
-    event.preventDefault();
-    console.info('You clicked a breadcrumb.');
-  }
+		event.preventDefault();
+		console.info("You clicked a breadcrumb.");
+	}
 
 	return (
 		<ThemeProvider theme={theme}>
@@ -35,30 +46,16 @@ export default function ViewSpecificStrain() {
 					<Typography fontFamily="Inter">
 						<div className="topText">
 							<div className="topLeft">
-								<h1>
-									{detail.scientificName}
-								</h1>
+								<h1>{detail.scientificName}</h1>
 								<div role="navigation" onClick={handleClick}>
 									<Breadcrumbs aria-label="breadcrumb">
-										<Link underline="hover" 
-											color="inherit" 
-											href="/"
-										>
+										<Link underline="hover" color="inherit" href="/">
 											Strain
 										</Link>
-										<Link
-											underline="hover"
-											color="inherit"
-											href="/strain"
-										>
+										<Link underline="hover" color="inherit" href="/strain">
 											Strain
 										</Link>
-										<Link
-											underline="hover"
-											color="text.primary"
-											href="/strain"
-											aria-current="page"
-										>
+										<Link underline="hover" color="text.primary" href="/strain" aria-current="page">
 											{detail.scientificName}
 										</Link>
 									</Breadcrumbs>
@@ -67,74 +64,135 @@ export default function ViewSpecificStrain() {
 							<div className="topRight">
 								{/* TODO: Hide edit button when user is logged in */}
 								<Button
-									startIcon={<Edit style={{ color: '#fff' }}/>}
-									variant="contained" 
+									startIcon={<Edit style={{ color: "#fff" }} />}
+									variant="contained"
 									size="medium"
 									sx={{ width: 150, padding: 1, margin: 2 }}
-									>
-										Edit
-									</Button>
-								<Button 
-									startIcon={<FileDownload style={{ color: '#fff' }}/>}
-									variant="contained" 
+								>
+									Edit
+								</Button>
+								<Button
+									startIcon={<FileDownload style={{ color: "#fff" }} />}
+									variant="contained"
 									size="medium"
 									sx={{ width: 150, padding: 1, margin: 2 }}
-									>
-										Export
+								>
+									Export
 								</Button>
 							</div>
 						</div>
 						<div className="container">
 							<div className="item">
-								<div className="left"><Typography fontWeight="bold" color="primary.gray">Scientific Name</Typography></div>
-								<div className="right"><Typography color="primary.main">{detail.scientificName}</Typography></div>
+								<div className="left">
+									<Typography fontWeight="bold" color="primary.gray">
+										Scientific Name
+									</Typography>
+								</div>
+								<div className="right">
+									<Typography color="primary.main">{detail.scientificName}</Typography>
+								</div>
 							</div>
 							<div className="item">
-								<div className="left"><Typography fontWeight="bold" color="primary.gray">Common Name</Typography></div>
-								<div className="right"><Typography color="primary.main">{detail.commonName}</Typography></div>
+								<div className="left">
+									<Typography fontWeight="bold" color="primary.gray">
+										Collection Number
+									</Typography>
+								</div>
+								<div className="right">
+									<Typography color="primary.main">{detail.collectionNumber}</Typography>
+								</div>
 							</div>
 							<div className="item">
-								<div className="left"><Typography fontWeight="bold" color="primary.gray">Domain</Typography></div>
-								<div className="right"><Typography color="primary.main">{detail.domain}</Typography></div>
+								<div className="left">
+									<Typography fontWeight="bold" color="primary.gray">
+										Strain Designation
+									</Typography>
+								</div>
+								<div className="right">
+									<Typography color="primary.main">{detail.strainDesignation}</Typography>
+								</div>
 							</div>
 							<div className="item">
-								<div className="left"><Typography fontWeight="bold" color="primary.gray">Kingdom</Typography></div>
-								<div className="right"><Typography color="primary.main">{detail.kingdom}</Typography></div>
+								<div className="left">
+									<Typography fontWeight="bold" color="primary.gray">
+										Strain Type
+									</Typography>
+								</div>
+								<div className="right">
+									<Typography color="primary.main">{detail.strainType}</Typography>
+								</div>
 							</div>
 							<div className="item">
-								<div className="left"><Typography fontWeight="bold"  color="primary.gray">Phylum</Typography></div>
-								<div className="right"><Typography color="primary.main">{detail.phylum}</Typography></div>
+								<div className="left">
+									<Typography fontWeight="bold" color="primary.gray">
+										Variant
+									</Typography>
+								</div>
+								<div className="right">
+									<Typography color="primary.main">{detail.variant}</Typography>
+								</div>
 							</div>
 							<div className="item">
-								<div className="left"><Typography fontWeight="bold" color="primary.gray">Medium</Typography></div>
-								<div className="right"><Typography color="primary.main">{detail.medium}</Typography></div>
+								<div className="left">
+									<Typography fontWeight="bold" color="primary.gray">
+										Domain
+									</Typography>
+								</div>
+								<div className="right">
+									<Typography color="primary.main">{detail.domain}</Typography>
+								</div>
 							</div>
 							<div className="item">
-								<div className="left"><Typography fontWeight="bold" color="primary.gray">Medium Composition</Typography></div>
-								<div className="right"><Typography color="primary.main">{detail.mediumComposition}</Typography></div>
+								<div className="left">
+									<Typography fontWeight="bold" color="primary.gray">
+										Phylum
+									</Typography>
+								</div>
+								<div className="right">
+									<Typography color="primary.main">{detail.phylum}</Typography>
+								</div>
 							</div>
 							<div className="item">
-								<div className="left"><Typography fontWeight="bold" color="primary.gray">Temperature</Typography></div>
-								<div className="right"><Typography color="primary.main">{detail.temperature}</Typography></div>
+								<div className="left">
+									<Typography fontWeight="bold" color="primary.gray">
+										Order
+									</Typography>
+								</div>
+								<div className="right">
+									<Typography color="primary.main">{detail.order}</Typography>
+								</div>
 							</div>
 							<div className="item">
-								<div className="left"><Typography fontWeight="bold" color="primary.gray">Temperature Range</Typography></div>
-								<div className="right"><Typography color="primary.main">{detail.temperatureRange}</Typography></div>
+								<div className="left">
+									<Typography fontWeight="bold" color="primary.gray">
+										Family
+									</Typography>
+								</div>
+								<div className="right">
+									<Typography color="primary.main">{detail.family}</Typography>
+								</div>
 							</div>
 							<div className="item">
-								<div className="left"><Typography fontWeight="bold" color="primary.gray">Reference List</Typography></div>
-								<div className="right"><Typography color="primary.main">{detail.referenceList}</Typography></div>
+								<div className="left">
+									<Typography fontWeight="bold" color="primary.gray">
+										Genus
+									</Typography>
+								</div>
+								<div className="right">
+									<Typography color="primary.main">{detail.genus}</Typography>
+								</div>
 							</div>
 							<div className="item">
-								<div className="left"><Typography fontWeight="bold" color="primary.gray">Species</Typography></div>
-								<div className="right"><Typography color="primary.main">{detail.species}</Typography></div>
-							</div>
-							<div className="item">
-								<div className="left"><Typography fontWeight="bold" color="primary.gray">Type Strain</Typography></div>
-								<div className="right"><Typography color="primary.main">{detail.typeStrain}</Typography></div>
+								<div className="left">
+									<Typography fontWeight="bold" color="primary.gray">
+										Species
+									</Typography>
+								</div>
+								<div className="right">
+									<Typography color="primary.main">{detail.species}</Typography>
+								</div>
 							</div>
 						</div>
-
 					</Typography>
 				</div>
 			</Box>

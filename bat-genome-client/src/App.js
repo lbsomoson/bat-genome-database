@@ -8,6 +8,7 @@ import { Topbar } from "./components/index";
 /* Pages */
 import {
 	AddStrain,
+	EditStrain,
 	CreateAccount,
 	Home,
 	Login,
@@ -47,6 +48,7 @@ export default function App() {
 					<Route path="view/strain" element={<ViewStrain />} />
 					<Route path="view/specificstrain" element={<ViewSpecificStrain />} />
 					<Route path="add/strain" element={<AddStrain />} />
+					<Route path="edit/strain" element={<EditStrain />} />
 					<Route path="users" element={<ManageUsers />} />
 				</Route>
 			</Routes>
