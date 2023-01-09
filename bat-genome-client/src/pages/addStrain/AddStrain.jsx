@@ -108,10 +108,10 @@ export default function AddStrain() {
 	// TODO: read file contents
 
 	// Handles POST request for strain creation
-    const handleAddStrain = async() => {
+	const handleAddStrain = async() => {
 		
-        // Object to be added to DB
-        let newStrain = {
+		// Object to be added to DB
+		let newStrain = {
 			strainID: values.strainID.toUpperCase(),
 			scientificName: values.scientificName.charAt(0).toUpperCase() + values.scientificName.slice(1),
 			strainDesignation: values.strainDesignation,
@@ -122,18 +122,18 @@ export default function AddStrain() {
 			family: values.family.charAt(0).toUpperCase() + values.family.slice(1),
 			genus: values.genus.charAt(0).toUpperCase() + values.genus.slice(1),
 			species: values.species,
-        };
+		};
 
-        // Perform POST request
-        postFetch('http://localhost:3001/strains', newStrain).then((res) => {
-            // Checking if the action is successful
-            if (!res) {
+		// Perform POST request
+		postFetch('http://localhost:3001/strains', newStrain).then((res) => {
+			// Checking if the action is successful
+			if (!res) {
 				console.error("Strain not added");
-            } else {
+			} else {
 				console.log("Strain successfully added");
-            };
-        })
-    }
+			};
+		})
+	}
 
 	return (
 		<ThemeProvider theme={theme}>
