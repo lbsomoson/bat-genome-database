@@ -7,16 +7,15 @@ const mongoose = require('mongoose');
 
 // Schema
 const strain = mongoose.model('strain', {
-	collectionNumber: { type: Number, required: true },
+	strainID: { type: String, required: true },
+	scientificName: { type: String, required: true },
 	domain: { type: String, required: true },
 	phylum: { type: String, required: true },
 	order: { type: String, required: true },
 	family: { type: String, required: true },
 	genus: { type: String, required: true },
 	species: { type: String, required: true },
-	scientificName: { type: String, required: true },
 	strainDesignation: String,
-	variant: String,
 	strainType: String
 });
 
@@ -26,36 +25,35 @@ const strain = mongoose.model('strain', {
 // Adds a strain to DB
 exports.addStrain = async(req, res) => {
 
-    var body = req.body;
+	var body = req.body;
 
-    // Return 400 error code if a required field is missing or is empty
-    if(!(body					&&
-			body.collectionNumber    &&
-			body.domain		&&
-			body.phylum		&&
-			body.order			&&
-			body.family		&&
-			body.genus			&&
-			body.species		&&
-			body.scientificName)) {
-				res.status(400);
-				res.send('Bad request');
-				return(0);
-    }
+	// Return 400 error code if a required field is missing or is empty
+	if(!(body				&&
+		body.strainID    &&
+		body.domain		&&
+		body.phylum		&&
+		body.order		&&
+		body.family		&&
+		body.genus		&&
+		body.species	&&
+		body.scientificName)) {
+			res.status(400).send("You did something wrong");
+			return(0);
+	}
 
-    try {
-      // Insert the new strain into db
-      const newStrain = new strain(req.body);
-      newStrain.save();
-      res.status(200);
-			res.send({ "success": true });
-			
-    } catch(err) {
-      // Throw 500 error and log error
-      res.status(500);
-      res.send("Internal server error");
-      console.error("Failure in DB insertion has occured.");
-    }
+	try {
+		// Insert the new strain into db
+		const newStrain = new strain(req.body);
+		newStrain.save();
+		res.status(200);
+		res.send({ "success": true });
+		
+	} catch(err) {
+		// Throw 500 error and log error
+		res.status(500);
+		res.send("Internal server error");
+		console.error("Failure in DB insertion has occured.");
+	}
 }
 
 // Updates a strain in DB

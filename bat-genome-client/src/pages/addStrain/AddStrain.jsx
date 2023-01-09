@@ -1,3 +1,8 @@
+import { useState } from "react";
+import { theme } from "../../theme";
+import { postFetch } from "../../utils/apiRequest.js";
+import "./AddStrain.css";
+
 import {
 	ThemeProvider,
 	Box,
@@ -10,45 +15,31 @@ import {
 } from "@mui/material";
 import { ArrowBack } from "@mui/icons-material";
 
-import { theme } from "../../theme";
-import { useState } from "react";
-import "./AddStrain.css";
+
+
+/* const species = [
+	{ value: "specie-1", text: "Specie 1" },
+	{ value: "specie-2", text: "Specie 2" },
+	{ value: "specie-3", text: "Specie 3" },
+	{ value: "specie-4", text: "Specie 4" },
+	{ value: "specie-5", text: "Specie 5" },
+]; */
+
 
 export default function AddStrain() {
 	const [values, setValues] = useState({
+		strainID: "",
 		scientificName: "",
-		collectionNumber: "",
 		strainDesignation: "",
 		strainType: "",
-		variant: "",
 		domain: "",
 		phylum: "",
 		order: "",
 		family: "",
 		genus: "",
-		species: "",
-
-		/* name: "",
-		scientificName: "",
-		medium: "",
-		mediumGrowth: "",
-		mediumGrowthCheckBox: false,
-		temperature: "",
-		temperatureType: "",
-		temperatureRange: "",
-		referenceList: "",
-		speciesOnly: false,
-		species: "",
-		fileContent: "", */
+		species: ""
 	});
 
-	/* const species = [
-		{ value: "specie-1", text: "Specie 1" },
-		{ value: "specie-2", text: "Specie 2" },
-		{ value: "specie-3", text: "Specie 3" },
-		{ value: "specie-4", text: "Specie 4" },
-		{ value: "specie-5", text: "Specie 5" },
-	]; */
 
 	// For input of types text or select
 	const handleChange = (e) => {
@@ -116,6 +107,34 @@ export default function AddStrain() {
 
 	// TODO: read file contents
 
+	// Handles POST request for strain creation
+	const handleAddStrain = async() => {
+		
+		// Object to be added to DB
+		let newStrain = {
+			strainID: values.strainID.toUpperCase(),
+			scientificName: values.scientificName.charAt(0).toUpperCase() + values.scientificName.slice(1),
+			strainDesignation: values.strainDesignation,
+			strainType: values.strainType,
+			domain: values.domain.charAt(0).toUpperCase() + values.domain.slice(1),
+			phylum: values.phylum.charAt(0).toUpperCase() + values.phylum.slice(1),
+			order: values.order.charAt(0).toUpperCase() + values.order.slice(1),
+			family: values.family.charAt(0).toUpperCase() + values.family.slice(1),
+			genus: values.genus.charAt(0).toUpperCase() + values.genus.slice(1),
+			species: values.species,
+		};
+
+		// Perform POST request
+		postFetch('http://localhost:3001/strains', newStrain).then((res) => {
+			// Checking if the action is successful
+			if (!res) {
+				console.error("Strain not added");
+			} else {
+				console.log("Strain successfully added");
+			};
+		})
+	}
+
 	return (
 		<ThemeProvider theme={theme}>
 			<Box className="main">
@@ -137,10 +156,10 @@ export default function AddStrain() {
 					</Grid>
 					<Grid item md={6}>
 						<TextField
-							label="Collection Number"
-							name="collectionNumber"
+							label="Strain ID"
+							name="strainID"
 							variant="outlined"
-							value={values.collectionNumber}
+							value={values.strainID}
 							onChange={handleChange}
 							fullWidth
 						/>
@@ -161,16 +180,6 @@ export default function AddStrain() {
 							name="strainType"
 							variant="outlined"
 							value={values.strainType}
-							onChange={handleChange}
-							fullWidth
-						/>
-					</Grid>
-					<Grid item md={4}>
-						<TextField
-							label="Variant"
-							name="variant"
-							variant="outlined"
-							value={values.variant}
 							onChange={handleChange}
 							fullWidth
 						/>
@@ -244,9 +253,14 @@ export default function AddStrain() {
 						{/*TODO: cancel*/}
 					</Grid>
 					<Grid item md={6}>
-						<Button variant="contained" sx={{ padding: "10px" }} fullWidth>
+						<Button
+							variant="contained"
+							sx={{ padding: "10px" }}
+							fullWidth
+							onClick={handleAddStrain}
+						>
 							ADD STRAIN
-						</Button>{" "}
+						</Button>
 						{/*TODO: onlick*/}
 					</Grid>
 				</Grid>
