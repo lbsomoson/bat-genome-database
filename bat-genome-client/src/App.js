@@ -1,6 +1,6 @@
 /* Router and Context */
 import { Outlet, BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { UserDetailsProvider } from "./context/UserDetailsProvider";
+import { UserDetailsProvider } from "./utils/UserDetailsProvider";
 
 /* Components */
 import {

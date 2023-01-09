@@ -1,7 +1,7 @@
 
 /* Context */
 import { theme } from "../../theme";
-import { userDetailsContext } from "../../context/UserDetailsProvider";
+import { userDetailsContext } from "../../utils/UserDetailsProvider";
 
 /* Hooks and Routing */
 import { NavLink } from "react-router-dom";

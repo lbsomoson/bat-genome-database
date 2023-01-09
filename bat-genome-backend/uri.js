@@ -1,7 +1,7 @@
 /*
-    URI.js
-    Contains Uniform Resource Identifier used for the web app
-    Replace the contents of this file when redeploying the website under different IP/Domain
+	URI.js
+	Contains Uniform Resource Identifier used for the web app
+	Replace the contents of this file when redeploying the website under different IP/Domain
 */
 
 exports.frontend =  "http://localhost:3000"
