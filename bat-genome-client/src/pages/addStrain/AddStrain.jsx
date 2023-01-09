@@ -1,14 +1,14 @@
-import { 
-	ThemeProvider, 
-	Box, 
+import {
+	ThemeProvider,
+	Box,
 	Button,
 	Grid,
-	Checkbox, 
+	Checkbox,
 	TextField,
 	FormControlLabel,
 	MenuItem,
 } from "@mui/material";
-import { ArrowBack } from '@mui/icons-material';
+import { ArrowBack } from "@mui/icons-material";
 
 import { theme } from "../../theme";
 import { useState } from "react";
@@ -31,13 +31,13 @@ export default function AddStrain() {
 	});
 
 	const species = [
-		{value: 'specie-1', text: 'Specie 1'},
-		{value: 'specie-2', text: 'Specie 2'},
-		{value: 'specie-3', text: 'Specie 3'},
-		{value: 'specie-4', text: 'Specie 4'},
-		{value: 'specie-5', text: 'Specie 5'},
+		{ value: "specie-1", text: "Specie 1" },
+		{ value: "specie-2", text: "Specie 2" },
+		{ value: "specie-3", text: "Specie 3" },
+		{ value: "specie-4", text: "Specie 4" },
+		{ value: "specie-5", text: "Specie 5" },
 	];
-	
+
 	// For input of types text or select
 	const handleChange = (e) => {
 		setValues({
@@ -57,54 +57,50 @@ export default function AddStrain() {
 
 		console.log(values);
 	};
-	
+
 	// TODO: Submit data
 	// const onSubmit = (data) => {
 	// 	console.log(data);
 	// 	alert("Clicked submit button!");
 	// };
-	
+
 	const SpecieSelect = ({ options }) => {
-		return(
+		return (
 			<Box>
 				<TextField
 					label="Select species"
 					name="species"
 					select
 					value={values.species}
-					onChange={handleChange} 
+					onChange={handleChange}
 					fullWidth
 				>
 					{options.map((choice, i) => {
-						return(
-							<MenuItem 
-								key={i}
-								value={choice.value}
-							>
+						return (
+							<MenuItem key={i} value={choice.value}>
 								{choice.text}
 							</MenuItem>
-						)
+						);
 					})}
 				</TextField>
 			</Box>
-		)
+		);
 	};
 
 	const handleFileChange = (e) => {
-
 		const uploadFileBtn = document.getElementById("uploadFileBtn");
 		const customText = document.getElementById("fileChosen");
 
-		if(uploadFileBtn.value) {
+		if (uploadFileBtn.value) {
 			const fileNameList = Array.prototype.map.call(uploadFileBtn.files, function (file) {
 				return file.name;
 			});
-			const label = fileNameList.join(', ');
+			const label = fileNameList.join(", ");
 			customText.innerHTML = label;
 		} else {
-			customText.innerHTML = "No file chosen."
+			customText.innerHTML = "No file chosen.";
 		}
-	}
+	};
 
 	// TODO: read file contents
 
@@ -112,130 +108,152 @@ export default function AddStrain() {
 		<ThemeProvider theme={theme}>
 			<Box className="main">
 				<ArrowBack />
-				<Box mt={5} mb={5}><h1>Add Strain</h1></Box>
+				<Box mt={5} mb={5}>
+					<h1>Add Strain</h1>
+				</Box>
 				{/* Form */}
 				<Grid container rowSpacing={2} columnSpacing={3}>
 					<Grid item md={6}>
-						<TextField 
-							label="Name" 
+						<TextField
+							label="Name"
 							name="name"
 							variant="outlined"
-							value={values.name} 
-							onChange={handleChange} 
-							fullWidth />
+							value={values.name}
+							onChange={handleChange}
+							fullWidth
+						/>
 					</Grid>
 					<Grid item md={6}>
-						<TextField 
-							label="Scientific Name" 
+						<TextField
+							label="Scientific Name"
 							name="scientificName"
-							variant="outlined" 
-							value={values.scientificName} 
-							onChange={handleChange} 
-							fullWidth />
+							variant="outlined"
+							value={values.scientificName}
+							onChange={handleChange}
+							fullWidth
+						/>
 					</Grid>
 					<Grid item md={6}>
-						<TextField 
-							label="Medium" 
+						<TextField
+							label="Medium"
 							name="medium"
-							variant="outlined" 
-							value={values.medium} 
-							onChange={handleChange} 
-							fullWidth />
+							variant="outlined"
+							value={values.medium}
+							onChange={handleChange}
+							fullWidth
+						/>
 					</Grid>
 					<Grid item md={6}>
-						<TextField 
-							label="Medium Growth" 
+						<TextField
+							label="Medium Growth"
 							name="mediumGrowth"
-							variant="outlined" 
-							value={values.mediumGrowth} 
-							onChange={handleChange} 
-							fullWidth />
+							variant="outlined"
+							value={values.mediumGrowth}
+							onChange={handleChange}
+							fullWidth
+						/>
 					</Grid>
 					<Grid item md={12}>
-						<FormControlLabel 
-							control={<Checkbox 
-								checked={values.mediumGrowthCheckBox} 
-								name="mediumGrowthCheckBox" 
-								onChange={handleCBChange} 
-							/>} 
+						<FormControlLabel
+							control={
+								<Checkbox
+									checked={values.mediumGrowthCheckBox}
+									name="mediumGrowthCheckBox"
+									onChange={handleCBChange}
+								/>
+							}
 							label="Medium Growth"
 						/>
 					</Grid>
 					<Grid item md={4}>
-						<TextField 
+						<TextField
 							label="Temperature"
-							name="temperature" 
-							variant="outlined" 
+							name="temperature"
+							variant="outlined"
 							value={values.temperature}
-							onChange={handleChange} 
-							fullWidth />
+							onChange={handleChange}
+							fullWidth
+						/>
 					</Grid>
 					<Grid item md={4}>
-						<TextField 
-							label="Temperature Type" 
+						<TextField
+							label="Temperature Type"
 							name="temperatureType"
-							variant="outlined" 
-							value={values.temperatureType} 
-							onChange={handleChange} 
-							fullWidth />
+							variant="outlined"
+							value={values.temperatureType}
+							onChange={handleChange}
+							fullWidth
+						/>
 					</Grid>
 					<Grid item md={4}>
-						<TextField 
-							label="Temperature Range" 
+						<TextField
+							label="Temperature Range"
 							name="temperatureRange"
-							variant="outlined" 
-							value={values.temperatureRange} 
-							onChange={handleChange} 
-							fullWidth />
-					</Grid>
-					<Grid item md={12}>
-						<TextField 
-							label="Reference List" 
-							name="referenceList"
-							variant="outlined" 
-							value={values.referenceList} 
-							onChange={handleChange} 
-							fullWidth 
-							multiline 
-							rows={4} />
-					</Grid>
-					<Grid item md={12}>
-						<FormControlLabel 
-							control={<Checkbox 
-								checked={values.speciesOnly} 
-								name="speciesOnly" 
-								onChange={handleCBChange} 
-							/>} 
-							label="Species Only" 
+							variant="outlined"
+							value={values.temperatureRange}
+							onChange={handleChange}
+							fullWidth
 						/>
 					</Grid>
 					<Grid item md={12}>
-						<SpecieSelect options={species}/>
+						<TextField
+							label="Reference List"
+							name="referenceList"
+							variant="outlined"
+							value={values.referenceList}
+							onChange={handleChange}
+							fullWidth
+							multiline
+							rows={4}
+						/>
+					</Grid>
+					<Grid item md={12}>
+						<FormControlLabel
+							control={
+								<Checkbox checked={values.speciesOnly} name="speciesOnly" onChange={handleCBChange} />
+							}
+							label="Species Only"
+						/>
+					</Grid>
+					<Grid item md={12}>
+						<SpecieSelect options={species} />
 					</Grid>
 					<Grid item md={12}>
 						<label className="label">Type Strain (file)</label>
 					</Grid>
 					<Grid item md={4}>
-							<Button variant="contained" component="label" fullWidth>
-								CHOOSE FILE
-								<input 
-									type="file" 
-									accept=".xlsx, .xls, .csv"
-									onChange={handleFileChange}
-									id="uploadFileBtn" 
-									multiple 
-									hidden
-								/>
-							</Button>
+						<Button variant="contained" component="label" fullWidth>
+							CHOOSE FILE
+							<input
+								type="file"
+								accept=".xlsx, .xls, .csv"
+								onChange={handleFileChange}
+								id="uploadFileBtn"
+								multiple
+								hidden
+							/>
+						</Button>
 					</Grid>
-					<Grid item md={8} style={{ display: "flex", justifyContent:"flex-start", alignItems: "center" }}>
-						<span className="label" id="fileChosen">No file chosen.</span>
+					<Grid
+						item
+						md={8}
+						style={{ display: "flex", justifyContent: "flex-start", alignItems: "center" }}
+					>
+						<span className="label" id="fileChosen">
+							No file chosen.
+						</span>
 					</Grid>
 					<Grid item md={6}>
-						<Button variant="outlined" sx={{ padding: "10px" }} fullWidth>CANCEL</Button> {/*TODO: cancel*/}
+						<Button variant="outlined" sx={{ padding: "10px" }} fullWidth>
+							CANCEL
+						</Button>{" "}
+						{/*TODO: cancel*/}
 					</Grid>
 					<Grid item md={6}>
-						<Button variant="contained" sx={{ padding: "10px" }} fullWidth>ADD STRAIN</Button> {/*TODO: onlick*/}
+						<Button variant="contained" sx={{ padding: "10px" }} fullWidth>
+							ADD STRAIN
+						</Button>{" "}
+						{/*TODO: onlick*/}
 					</Grid>
 				</Grid>
 			</Box>

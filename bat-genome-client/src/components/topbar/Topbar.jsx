@@ -1,19 +1,13 @@
-
 /* Context */
 import { theme } from "../../theme";
-import { userDetailsContext } from "../../utils/UserDetailsProvider";
+import { userDetailsContext } from "../../context/UserDetailsProvider";
 
 /* Hooks and Routing */
 import { NavLink } from "react-router-dom";
-import {
-	useContext,
-	useEffect,
-	useRef,
-	useState,
-} from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 
 /* Material UI */
-import { AccountCircle, MenuRounded } from '@mui/icons-material';
+import { AccountCircle, MenuRounded } from "@mui/icons-material";
 import {
 	AppBar,
 	Box,
@@ -25,19 +19,17 @@ import {
 	Toolbar,
 	Tooltip,
 	ThemeProvider,
-	Typography
+	Typography,
 } from "@mui/material";
-
 
 /* Main Navigation Pages */
 const pages = [
-	{ text: 'Home', href: '/' },
-	{ text: 'View Strains', href: '/view/strain' },
-	{ text: 'Manage Users', href: '/users' },
-	{ text: 'Login', href: '/login' },
-	{ text: 'Create Account', href: '/createaccount' },
+	{ text: "Home", href: "/" },
+	{ text: "View Strains", href: "/view/strain" },
+	{ text: "Manage Users", href: "/users" },
+	{ text: "Login", href: "/login" },
+	{ text: "Create Account", href: "/createaccount" },
 ];
-
 
 /**
  * This component is the navigation bar located at the top of every page.
@@ -48,41 +40,41 @@ const TopBar = () => {
 
 	const [anchorUser, setAnchorUser] = useState(null);
 	const [anchorNav, setAnchorNav] = useState(null);
-  
+
 	const anchorRef = useRef();
 
 	/**
 	 *  -----for testing with a logged in account
 	 * initial state will show that an account is logged in
-	 */ 
+	 */
 	useEffect(() => {
 		setUserDetails({
-			user: 'Sample User',
-			role: 'admin'
-		})
-	
+			user: "Sample User",
+			role: "admin",
+		});
+
 		console.log(userDetails);
 
-	// eslint-disable-next-line
+		// eslint-disable-next-line
 	}, []);
 
 	/**
 	 * Handlers for opening and closing of the user account and mobile navigation menu
 	 */
-  const handleOpenAccountMenu = (event) => {
-    setAnchorUser(event.currentTarget);
-  };
-	
-	const handleOpenNavMenu = (event) => {
-    setAnchorNav(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorNav(null);
+	const handleOpenAccountMenu = (event) => {
+		setAnchorUser(event.currentTarget);
 	};
-	
+
+	const handleOpenNavMenu = (event) => {
+		setAnchorNav(event.currentTarget);
+	};
+
+	const handleCloseNavMenu = () => {
+		setAnchorNav(null);
+	};
+
 	const handleCloseAccountMenu = () => {
-    setAnchorUser(null);
+		setAnchorUser(null);
 	};
 
 	/**
@@ -90,36 +82,33 @@ const TopBar = () => {
 	 */
 	const handleLogout = () => {
 		setUserDetails(null);
-	}
-	
+	};
+
 	/**
 	 * Renders desktop navigation pages based on user role
 	 */
 	const renderNavPages = (excluded) => {
 		return (
 			<>
-				{pages.map((page, idx) => (
-					excluded.includes(page.text) ?
-						null
-						: <Button
-								key={idx}
-								variant="text"
-								sx={{ fontSize:'16px', mx:2 }}
+				{pages.map((page, idx) =>
+					excluded.includes(page.text) ? null : (
+						<Button key={idx} variant="text" sx={{ fontSize: "16px", mx: 2 }}>
+							<NavLink
+								to={page.href}
+								style={({ isActive }) =>
+									isActive
+										? { fontWeight: "900", textDecoration: "none", color: "white" }
+										: { fontWeight: "400", textDecoration: "none", color: "white" }
+								}
 							>
-								<NavLink
-									to={page.href}
-									style={({ isActive }) =>
-										isActive ? { fontWeight: '900', textDecoration: 'none', color: "white" }
-											: { fontWeight: '400', textDecoration: 'none', color: "white" }
-									}
-								>
-									{page.text}
-								</NavLink>
-							</Button>
-				))}
+								{page.text}
+							</NavLink>
+						</Button>
+					)
+				)}
 			</>
-		)
-	}
+		);
+	};
 
 	/**
 	 * Renders mobile navigation pages based on user role
@@ -127,30 +116,24 @@ const TopBar = () => {
 	const renderMobilePages = (excluded) => {
 		return (
 			<div>
-				{pages.map((page, idx) => (
-					excluded.includes(page.text) ?
-						null
-						: <MenuItem
-								key={idx}
-								component={NavLink}
-								to={page.href}
-								onClick={handleCloseNavMenu}
-							>
-								{page.text}
-							</MenuItem>
-				))}
+				{pages.map((page, idx) =>
+					excluded.includes(page.text) ? null : (
+						<MenuItem key={idx} component={NavLink} to={page.href} onClick={handleCloseNavMenu}>
+							{page.text}
+						</MenuItem>
+					)
+				)}
 			</div>
-		)
-	}
+		);
+	};
 
 	return (
 		<ThemeProvider theme={theme}>
-			<AppBar component="nav" >
-				<Container maxWidth="xl" >
+			<AppBar component="nav">
+				<Container maxWidth="xl">
 					<Toolbar disableGutters>
-
 						{/* -----Mobile View----- */}
-						<Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+						<Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
 							{/* Menu Burger Icon */}
 							<IconButton
 								size="large"
@@ -161,29 +144,28 @@ const TopBar = () => {
 							>
 								<MenuRounded />
 							</IconButton>
-							
+
 							{/* Menu for navigation pages */}
 							<Menu
 								id="pages-mobile"
 								anchorEl={anchorNav}
 								anchorOrigin={{
-									vertical: 'bottom',
-									horizontal: 'left',
+									vertical: "bottom",
+									horizontal: "left",
 								}}
 								keepMounted
 								transformOrigin={{
-									vertical: 'top',
-									horizontal: 'left',
+									vertical: "top",
+									horizontal: "left",
 								}}
 								open={Boolean(anchorNav)}
-								sx={{ display: { xs: 'block', md: 'none' } }}
+								sx={{ display: { xs: "block", md: "none" } }}
 							>
-								{userDetails != null ?
-									userDetails.role === "admin" ?
-												renderMobilePages(["Login", "Create Account"])
-											: renderMobilePages(["Login", "Create Account", "Manage Users"])
-									:renderMobilePages(["Manage Users"])
-								}
+								{userDetails != null
+									? userDetails.role === "admin"
+										? renderMobilePages(["Login", "Create Account"])
+										: renderMobilePages(["Login", "Create Account", "Manage Users"])
+									: renderMobilePages(["Manage Users"])}
 							</Menu>
 						</Box>
 
@@ -195,7 +177,7 @@ const TopBar = () => {
 							sx={{
 								fontWeight: 700,
 								flexGrow: 1,
-								display: { xs: 'flex', md: 'none' }
+								display: { xs: "flex", md: "none" },
 							}}
 						>
 							Bat Genome Database
@@ -208,31 +190,29 @@ const TopBar = () => {
 							noWrap
 							component="div"
 							sx={{
-								fontSize: '25px',
+								fontSize: "25px",
 								fontWeight: 700,
-								display: { xs: 'none', md: 'block' }
+								display: { xs: "none", md: "block" },
 							}}
 						>
 							Bat Genome Database
 						</Typography>
-						<Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }} />
+						<Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }} />
 
 						{/* Navigation Pages */}
-						<Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-							{userDetails != null ?
-									userDetails.role === "admin" ?
-											renderNavPages(["Login", "Create Account"])
-										: renderNavPages(["Login", "Create Account", "Manage Users"])
-								:renderNavPages(["Manage Users"])
-							}
+						<Box sx={{ display: { xs: "none", md: "flex" } }}>
+							{userDetails != null
+								? userDetails.role === "admin"
+									? renderNavPages(["Login", "Create Account"])
+									: renderNavPages(["Login", "Create Account", "Manage Users"])
+								: renderNavPages(["Manage Users"])}
 						</Box>
 						{/* ----- */}
 
 						<Box>
 							{/* User Icon */}
-							{userDetails == null ?
-								null
-								: <Tooltip title="Open settings">
+							{userDetails == null ? null : (
+								<Tooltip title="Open settings">
 									<IconButton
 										size="large"
 										edge="end"
@@ -245,23 +225,23 @@ const TopBar = () => {
 										<AccountCircle />
 									</IconButton>
 								</Tooltip>
-							}
+							)}
 
 							{/* User Account Menu */}
 							<Menu
 								id="menu-appbar"
 								anchorEl={anchorRef.current}
 								anchorOrigin={{
-									vertical: 'top',
-									horizontal: 'right',
+									vertical: "top",
+									horizontal: "right",
 								}}
 								keepMounted
 								transformOrigin={{
-									vertical: 'top',
-									horizontal: 'right',
+									vertical: "top",
+									horizontal: "right",
 								}}
 								open={Boolean(anchorUser)}
-								sx={{ mt: '34px' }}
+								sx={{ mt: "34px" }}
 							>
 								<MenuItem
 									component={NavLink}
@@ -274,7 +254,7 @@ const TopBar = () => {
 								</MenuItem>
 								<MenuItem
 									component={NavLink}
-									to='/'
+									to="/"
 									onClick={() => {
 										handleCloseAccountMenu();
 										handleLogout();
@@ -288,8 +268,7 @@ const TopBar = () => {
 				</Container>
 			</AppBar>
 		</ThemeProvider>
-  );
-}
-
+	);
+};
 
 export default TopBar;
