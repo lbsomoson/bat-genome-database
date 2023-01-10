@@ -89,12 +89,6 @@ export default function ViewStrain() {
 			flex: 1,
 		},
 		{
-			field: "domain",
-			headerName: "Domain",
-			minWidth: 110,
-			flex: 1,
-		},
-		{
 			field: "phylum",
 			headerName: "Phylum",
 			minWidth: 110,
@@ -103,6 +97,12 @@ export default function ViewStrain() {
 		{
 			field: "order",
 			headerName: "Order",
+			minWidth: 110,
+			flex: 1,
+		},
+		{
+			field: "species",
+			headerName: "Species",
 			minWidth: 110,
 			flex: 1,
 		},
@@ -116,7 +116,6 @@ export default function ViewStrain() {
 					<GridActionsCellItem
 						icon={<Visibility color={"primary"} />}
 						label="View Strain Details"
-						// TODO: IPASA DITO YUNG ID NG STRAIN PARA YUN YUNG GAGAMITIN SA API CALL
 						onClick={() => navigate("/view/specificstrain", {state: data.row})}
 					/>
 				</Tooltip>,
@@ -132,12 +131,7 @@ export default function ViewStrain() {
 					<GridActionsCellItem
 						icon={<Delete color={"primary"} />}
 						label="Delete"
-						// TODO: IPASA DITO YUNG ID NG STRAIN PARA YUN YUNG GAGAMITIN SA API CALL
-						onClick={
-							() => { 
-								handleDeleteStrain(data);
-							}
-						}
+						onClick={() => { handleDeleteStrain(data); }}
 					/>
 				</Tooltip>,
 			],
@@ -155,7 +149,8 @@ export default function ViewStrain() {
 
             // Map out the entries returned by fetch.
             data.forEach((strain, index) => {
-                allStrains.unshift({
+				allStrains.unshift({
+					_id: strain._id,
                     id: strain.strainID,
 					scientificName: strain.scientificName,
 					domain: strain.domain,
