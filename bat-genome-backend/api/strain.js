@@ -28,7 +28,7 @@ exports.addStrain = async(req, res) => {
 	var body = req.body;
 
 	// Return 400 error code if a required field is missing or is empty
-	if(!(body				&&
+	if(!(body			&&
 		body.strainID	&&
 		body.domain		&&
 		body.phylum		&&
@@ -58,18 +58,15 @@ exports.addStrain = async(req, res) => {
 
 // Updates a strain in DB
 exports.editStrain = async (req,res) => {
-
 	try {
-		const item = await strain.findById(req.params.id);
-		Object.assign(item, req.body);
-		item.save();
-		res.status(200);
-		res.send({ "success": true });
+		var updatedStrain = await strain.findById(req.params.id);
+		Object.assign(updatedStrain, req.body);
+		updatedStrain.save();
+		res.status(200).send({ "success": true });
     
 	} catch(err) {
-		console.log(err)
-		res.status(500);
-		res.send("Internal server error");
+		console.log(err);
+		res.status(500).send("Internal server error");
 		console.error("Failed to update a document.");    
 	}
 }
@@ -77,7 +74,7 @@ exports.editStrain = async (req,res) => {
 // returns a specific strain
 exports.viewSpecificStrain = async (req,res) => {
     try{
-		var strain = await strain.findById(req.param.strainID);
+		var strain = await strain.findById(req.params.strainID);
 		res.send({ strain });
         res.status(200).send(body);
 		
@@ -103,6 +100,7 @@ exports.viewStrains = async (req,res) => {
 	}
 }
 
+// deletes a strain in DB
 exports.deleteStrain = async (req,res) => {
 	try {
 		const delStrain = await strain.deleteMany({strainID: req.params.id});

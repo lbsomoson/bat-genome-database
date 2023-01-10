@@ -20,10 +20,9 @@ import { putFetch } from "../../utils/apiRequest.js";
 // Check for changes
 
 export default function EditStrain() {
-	const [isDisabled, setIsDisabled] = useState(true);
-	const [currentState, setCurrentState] = useState({});
 	const [values, setValues] = useState({
-		strainID: "",
+		_id: "",
+		id: "",
 		scientificName: "",
 		strainDesignation: "",
 		strainType: "",
@@ -33,31 +32,12 @@ export default function EditStrain() {
 		family: "",
 		genus: "",
 		species: "",
-
-		/* name: "",
-		scientificName: "",
-		medium: "",
-		mediumGrowth: "",
-		mediumGrowthCheckBox: false,
-		temperature: "",
-		temperatureType: "",
-		temperatureRange: "",
-		referenceList: "",
-		speciesOnly: false,
-		species: "",
-		fileContent: "", */
 	});
 
-	/* const species = [
-		{ value: "specie-1", text: "Specie 1" },
-		{ value: "specie-2", text: "Specie 2" },
-		{ value: "specie-3", text: "Specie 3" },
-		{ value: "specie-4", text: "Specie 4" },
-		{ value: "specie-5", text: "Specie 5" },
-	]; */
-
 	const { state } = useLocation();
+
 	const navigate = useNavigate();
+
 	// For input of types text or select
 	const handleChange = (e) => {
 		setValues({
@@ -123,14 +103,16 @@ export default function EditStrain() {
 	// TODO: read file contents
 
 	useEffect(() => {
-		setValues({ ...values, ...state });
+		setValues({ ...state });
 	}, []);
 
-	// Handles PUT request for strain creation
-	const handleEditStrain = async () => {
-		// Object to be added to DB
-		let newStrain = {
-			strainID: values.id.toString(),
+
+	// Handles PUT request for inventory item updates
+    function handleEditStrain() {
+        // Setup values for the fields
+		let editedStrain = {
+			_id: values._id,
+            strainID: values.id.toUpperCase(),
 			scientificName: values.scientificName.charAt(0).toUpperCase() + values.scientificName.slice(1),
 			strainDesignation: values.strainDesignation,
 			strainType: values.strainType,
@@ -140,19 +122,19 @@ export default function EditStrain() {
 			family: values.family.charAt(0).toUpperCase() + values.family.slice(1),
 			genus: values.genus.charAt(0).toUpperCase() + values.genus.slice(1),
 			species: values.species,
-		};
-
-		// Perform POST request
-		putFetch("http://localhost:3001/strains/" + values.id, newStrain).then((res) => {
-			// Checking if the action is successful
-			if (!res) {
-				console.error("Strain not added");
-			} else {
-				console.log("Strain successfully added");
-				navigate("/view/strain");
-			}
-		});
-	};
+		}
+        // Perform PUT request
+        putFetch(`http://localhost:3001/strains/${values._id}`, editedStrain)
+            .then((val) => {
+				if (!val) {
+					console.log("Strain document failed to update.");
+                } else {
+					console.log("Strain document has been updated successfully.");
+					navigate("/view/strain");
+                }
+            }
+        );
+    }
 
 	return (
 		<ThemeProvider theme={theme}>
@@ -280,7 +262,7 @@ export default function EditStrain() {
 							variant="contained"
 							sx={{ padding: "10px" }}
 							onClick={handleEditStrain}
-							/* disabled={isDisabled} */
+							disabled={JSON.stringify(values) === JSON.stringify(state)}
 							fullWidth
 						>
 							SAVE CHANGES
