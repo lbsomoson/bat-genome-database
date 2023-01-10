@@ -19,7 +19,7 @@ export default function Home() {
 							display="inline"
 							sx={{ fontSize: "40px", fontWeight: " 700", letterSpacing: "0.15px", lineHeight: "44px" }}
 						>
-							Bat Genome Database
+							Bacterial Genome Database
 						</Typography>
 					</Box>
 					<Box className="aboutInfo">
@@ -33,12 +33,12 @@ export default function Home() {
 								textAlign: "center",
 							}}
 						>
-							The <b> Bat Genome Database</b> is a web-based platform that enables users to access and
-							contribute information about the genomes of various strains of bats. At present, users of the
+							The <b> Bacterial Genome Database</b> is a web-based platform that enables users to access and
+							contribute information about the genomes of various strains of bacteria. At present, users of the
 							database are able to submit data about a strain's scientific name, identification number,
 							strain designation, strain type, and taxonomic rank. The purpose of the database is to
 							provide a centralized resource for accessing and sharing information about the genomic
-							characteristics of different strains of bats, which can be useful for a variety of research
+							characteristics of different strains of bacteria, which can be useful for a variety of research
 							and conservation purposes.
 						</Typography>
 					</Box>

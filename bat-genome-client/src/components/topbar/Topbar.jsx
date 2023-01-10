@@ -182,7 +182,7 @@ const TopBar = () => {
 								display: { xs: "flex", md: "none" },
 							}}
 						>
-							Bat Genome Database
+							Bacterial Genome Database
 						</Typography>
 						{/* ----- */}
 
@@ -198,7 +198,7 @@ const TopBar = () => {
 								display: { xs: "none", md: "block" },
 							}}
 						>
-							Bat Genome Database
+							Bacterial Genome Database
 						</Typography>
 						<Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }} />
 
