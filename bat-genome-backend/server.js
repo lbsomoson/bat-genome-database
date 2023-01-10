@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 const router = require('./router');
 const uri = require('./uri.js');
 
-mongoose.connect('mongodb://127.0.0.1/BatGenomeDB', {
+mongoose.connect('mongodb://127.0.0.1/BacGenomeDB', {
     useNewUrlParser: true, useUnifiedTopology: true
 });
 
