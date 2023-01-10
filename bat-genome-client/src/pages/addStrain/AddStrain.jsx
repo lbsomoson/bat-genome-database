@@ -130,6 +130,7 @@ export default function AddStrain() {
 				console.error("Strain not added");
 			} else {
 				console.log("Strain successfully added");
+				navigate("/view/strain");
 			}
 		});
 	};
@@ -256,10 +257,24 @@ export default function AddStrain() {
 						</Button>{" "}
 					</Grid>
 					<Grid item md={6}>
-						<Button variant="contained" sx={{ padding: "10px" }} fullWidth onClick={handleAddStrain}>
+						<Button
+							variant="contained"
+							sx={{ padding: "10px" }}
+							fullWidth
+							onClick={handleAddStrain}
+							disabled={
+								!(values.strainID &&
+								values.scientificName &&
+								values.domain &&
+								values.phylum &&
+								values.order &&
+								values.family &&
+								values.genus &&
+								values.species)
+							}
+						>
 							ADD STRAIN
 						</Button>
-						{/*TODO: onlick*/}
 					</Grid>
 				</Grid>
 			</Box>
