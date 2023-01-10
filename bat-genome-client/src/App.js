@@ -1,6 +1,6 @@
 /* Router and Context */
 import { Outlet, BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { UserDetailsProvider } from "./context/UserDetailsProvider";
+import { UserDetailsProvider } from "./utils/UserDetailsProvider";
 
 /* Components */
 import { Topbar } from "./components/index";
@@ -22,12 +22,12 @@ import {
  */
 function Layout() {
 	return (
-		<UserDetailsProvider>
+		<>
 			<nav>
 				<Topbar />
 			</nav>
 			<Outlet />
-		</UserDetailsProvider>
+		</>
 	);
 }
 
@@ -36,22 +36,24 @@ function Layout() {
  */
 export default function App() {
 	return (
-		<Router>
-			<Routes>
-				{/* Login and Create Account page do not have the topbar */}
-				<Route path="/login" element={<Login />} />
-				<Route path="/createaccount" element={<CreateAccount />} />
+		<UserDetailsProvider>
+			<Router>
+				<Routes>
+					{/* Login and Create Account page do not have the topbar */}
+					<Route path="/login" element={<Login />} />
+					<Route path="/createaccount" element={<CreateAccount />} />
 
-				{/* Pages with topbar */}
-				<Route path="/" element={<Layout />}>
-					<Route index element={<Home />} />
-					<Route path="view/strain" element={<ViewStrain />} />
-					<Route path="view/specificstrain" element={<ViewSpecificStrain />} />
-					<Route path="add/strain" element={<AddStrain />} />
-					<Route path="edit/strain" element={<EditStrain />} />
-					<Route path="users" element={<ManageUsers />} />
-				</Route>
-			</Routes>
-		</Router>
+					{/* Pages with topbar */}
+					<Route path="/" element={<Layout />}>
+						<Route index element={<Home />} />
+						<Route path="view/strain" element={<ViewStrain />} />
+						<Route path="view/specificstrain" element={<ViewSpecificStrain />} />
+						<Route path="add/strain" element={<AddStrain />} />
+						<Route path="edit/strain" element={<EditStrain />} />
+						<Route path="users" element={<ManageUsers />} />
+					</Route>
+				</Routes>
+			</Router>
+		</UserDetailsProvider>
 	);
 }

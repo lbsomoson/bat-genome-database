@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { userDetailsContext } from "../../utils/UserDetailsProvider";
 
 // For input validation
 import { useForm } from "react-hook-form";
@@ -23,6 +24,8 @@ import { errorMsgs } from "./errors";
 import "./login.css";
 
 export default function Login() {
+	const [userDetails, setUserDetails] = useContext(userDetailsContext);
+
 		// Navigation
 		const navigate = useNavigate();
 
@@ -65,6 +68,10 @@ export default function Login() {
 				  else if (body.success === "wrong") {alert("Wrong password")}
 				  else if (body.success) {
 					alert("Successfully login");
+					setUserDetails({
+						user: "User",
+						role: "admin",
+					});
 					navigate("/");
 				  }
 				  else { alert("Failed"); }
