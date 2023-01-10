@@ -5,6 +5,7 @@ import { userDetailsContext } from "../../context/UserDetailsProvider";
 /* Hooks and Routing */
 import { NavLink } from "react-router-dom";
 import { useContext, useEffect, useRef, useState } from "react";
+import ViewProfile from "../viewProfileModal/ViewProfile";
 
 /* Material UI */
 import { AccountCircle, GroupWork, MenuRounded } from "@mui/icons-material";
@@ -38,7 +39,7 @@ const pages = [
 const TopBar = () => {
 	const [userDetails, setUserDetails] = useContext(userDetailsContext);
 
-	const [anchorUser, setAnchorUser] = useState(null);
+	const [anchorUser, setAnchorUser] = useState(false);
 	const [anchorNav, setAnchorNav] = useState(null);
 
 	const anchorRef = useRef();
@@ -47,22 +48,23 @@ const TopBar = () => {
 	 *  -----for testing with a logged in account
 	 * initial state will show that an account is logged in
 	 */
-	useEffect(() => {
-		setUserDetails({
-			user: "Sample User",
-			role: "admin",
-		});
+	// useEffect(() => {
+	// 	setUserDetails({
+	// 		user: "Sample User",
+	// 		role: "admin",
+	// 	});
 
-		console.log(userDetails);
+	// 	console.log(userDetails);
 
-		// eslint-disable-next-line
-	}, []);
+	// 	// eslint-disable-next-line
+	// }, []);
 
 	/**
 	 * Handlers for opening and closing of the user account and mobile navigation menu
 	 */
-	const handleOpenAccountMenu = (event) => {
+	const handleOpenProfile = (event) => {
 		setAnchorUser(event.currentTarget);
+		
 	};
 
 	const handleOpenNavMenu = (event) => {
@@ -73,8 +75,8 @@ const TopBar = () => {
 		setAnchorNav(null);
 	};
 
-	const handleCloseAccountMenu = () => {
-		setAnchorUser(null);
+	const handleCloseProfile = () => {
+		setAnchorUser(false);
 	};
 
 	/**
@@ -219,7 +221,7 @@ const TopBar = () => {
 										edge="end"
 										aria-label="account of current user"
 										aria-haspopup="true"
-										onClick={handleOpenAccountMenu}
+										onClick={handleOpenProfile}
 										color="inherit"
 										ref={anchorRef}
 									>
@@ -248,7 +250,7 @@ const TopBar = () => {
 									component={NavLink}
 									// to='/profile'
 									onClick={() => {
-										handleCloseAccountMenu();
+										handleCloseProfile();
 									}}
 								>
 									Profile
@@ -257,7 +259,7 @@ const TopBar = () => {
 									component={NavLink}
 									to="/"
 									onClick={() => {
-										handleCloseAccountMenu();
+										handleCloseProfile();
 										handleLogout();
 									}}
 								>
