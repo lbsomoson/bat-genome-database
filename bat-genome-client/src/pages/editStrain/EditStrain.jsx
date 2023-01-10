@@ -1,8 +1,3 @@
-import { useState } from "react";
-import { theme } from "../../theme";
-import { postFetch } from "../../utils/apiRequest.js";
-import "./AddStrain.css";
-
 import {
 	ThemeProvider,
 	Box,
@@ -14,19 +9,19 @@ import {
 	MenuItem,
 } from "@mui/material";
 import { ArrowBack } from "@mui/icons-material";
+import { useNavigate, useLocation } from "react-router-dom";
+import { theme } from "../../theme";
+import { useState, useEffect } from "react";
+import { putFetch } from "../../utils/apiRequest.js";
+/* import "./AddStrain.css"; */
 
+// TODO:
+// Add snackbar notif(?)
+// Check for changes
 
-
-/* const species = [
-	{ value: "specie-1", text: "Specie 1" },
-	{ value: "specie-2", text: "Specie 2" },
-	{ value: "specie-3", text: "Specie 3" },
-	{ value: "specie-4", text: "Specie 4" },
-	{ value: "specie-5", text: "Specie 5" },
-]; */
-
-
-export default function AddStrain() {
+export default function EditStrain() {
+	const [isDisabled, setIsDisabled]= useState(true);
+	const [currentState, setCurrentState]= useState({});
 	const [values, setValues] = useState({
 		strainID: "",
 		scientificName: "",
@@ -38,17 +33,37 @@ export default function AddStrain() {
 		family: "",
 		genus: "",
 		species: ""
+
+		/* name: "",
+		scientificName: "",
+		medium: "",
+		mediumGrowth: "",
+		mediumGrowthCheckBox: false,
+		temperature: "",
+		temperatureType: "",
+		temperatureRange: "",
+		referenceList: "",
+		speciesOnly: false,
+		species: "",
+		fileContent: "", */
 	});
 
+	/* const species = [
+		{ value: "specie-1", text: "Specie 1" },
+		{ value: "specie-2", text: "Specie 2" },
+		{ value: "specie-3", text: "Specie 3" },
+		{ value: "specie-4", text: "Specie 4" },
+		{ value: "specie-5", text: "Specie 5" },
+	]; */
 
+	const { state } = useLocation();
+	const navigate = useNavigate();
 	// For input of types text or select
 	const handleChange = (e) => {
 		setValues({
 			...values,
 			[e.target.name]: e.target.value,
 		});
-
-		console.log(values);
 	};
 
 	// For input of type combobox
@@ -107,12 +122,18 @@ export default function AddStrain() {
 
 	// TODO: read file contents
 
-	// Handles POST request for strain creation
-	const handleAddStrain = async() => {
+	useEffect(() => {
+		setValues({...values, ...state})
+		
+	  }, []);
+
+	
+	// Handles PUT request for strain creation
+	const handleEditStrain = async() => {
 		
 		// Object to be added to DB
 		let newStrain = {
-			strainID: values.strainID.toUpperCase(),
+			strainID: values.id.toString(),
 			scientificName: values.scientificName.charAt(0).toUpperCase() + values.scientificName.slice(1),
 			strainDesignation: values.strainDesignation,
 			strainType: values.strainType,
@@ -125,12 +146,13 @@ export default function AddStrain() {
 		};
 
 		// Perform POST request
-		postFetch('http://localhost:3001/strains', newStrain).then((res) => {
+		putFetch('http://localhost:3001/strains/'+ values.id, newStrain).then((res) => {
 			// Checking if the action is successful
 			if (!res) {
 				console.error("Strain not added");
 			} else {
 				console.log("Strain successfully added");
+				navigate("/view/strain");
 			};
 		})
 	}
@@ -140,7 +162,7 @@ export default function AddStrain() {
 			<Box className="main">
 				<ArrowBack />
 				<Box mt={5} mb={5}>
-					<h1>Add Strain</h1>
+					<h1>Edit Strain</h1>
 				</Box>
 				{/* Form */}
 				<Grid container rowSpacing={2} columnSpacing={3}>
@@ -247,21 +269,26 @@ export default function AddStrain() {
 					</Grid>
 
 					<Grid item md={6}>
-						<Button variant="outlined" sx={{ padding: "10px" }} fullWidth>
+						<Button 
+							variant="outlined" 
+							sx={{ padding: "10px" }} 
+							onClick={()=> navigate("/view/strain")} 
+							fullWidth
+						>
 							CANCEL
 						</Button>{" "}
-						{/*TODO: cancel*/}
 					</Grid>
 					<Grid item md={6}>
-						<Button
-							variant="contained"
+						<Button 
+							variant="contained" 
 							sx={{ padding: "10px" }}
+							onClick={handleEditStrain}
+							disabled={isDisabled}
 							fullWidth
-							onClick={handleAddStrain}
 						>
-							ADD STRAIN
-						</Button>
-						{/*TODO: onlick*/}
+							SAVE CHANGES
+						</Button>{" "}
+
 					</Grid>
 				</Grid>
 			</Box>

@@ -1,187 +1,230 @@
-import { ThemeProvider, Typography, Box, Button, Breadcrumbs } from "@mui/material";
-import { ArrowBack, Edit, FileDownload, Link } from '@mui/icons-material';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
+
+import {
+	Button,
+	Box,
+	ThemeProvider,
+	Typography
+} from "@mui/material";
+import "./viewStrain.css";
+import {
+	Add,
+	ArrowBack,
+	Delete,
+	Edit,
+	FileDownload,
+	Link,
+	Visibility
+} from "@mui/icons-material";
+
 import { theme } from "../../theme";
 
-import "./ViewStrain.css";
-import { useEffect, useState } from "react";
-import { getFetch } from "../../utils/apiRequest";
 
-const values = {
-	scientificName: "Parastratiosphecomyia stratiosphecomyioides",
-	commonName: "Common Name",
-	domain: "Domain",
-	kingdom: "Kingdom",
-	phylum: "Phylum",
-	medium: "Medium",
-	mediumComposition: "Medium Composition",
-	temperature: "Temperature",
-	temperatureRange: "Temperature Range",
-	referenceList: "Reference List",
-	species: "Species",
-	typeStrain: "Type Strain",
-}
+const rows = [
+	{
+		id: 1,
+		name: "1",
+		scientificName: "Cistugo",
+		common_name: "Lesueur's Wing-gland Bat",
+		domain: "Eukaryote",
+		kingdom: "Animal",
+		phylum: "Chordate",
+	},
+	{
+		id: 2,
+		name: "2",
+		scientificName: "Cistugo",
+		common_name: "Angolan Wing-gland Bat",
+		domain: "Eukaryote",
+		kingdom: "Animal",
+		phylum: "Chordate",
+	},
+	{
+		id: 3,
+		name: "3",
+		scientificName: "Craseonycteris",
+		common_name: "Bumblebee Bat",
+		domain: "Eukaryote",
+		kingdom: "Animal",
+		phylum: "Chordate",
+	},
+	{
+		id: 4,
+		name: "4",
+		scientificName: "Balantiopteryx",
+		common_name: "Ecuadorian Sac-winged Bat",
+		domain: "Eukaryote",
+		kingdom: "Animal",
+		phylum: "Chordate",
+	},
+	{
+		id: 5,
+		name: "5",
+		scientificName: "Balantiopteryx",
+		common_name: "Thomas's Sac-winged Bat",
+		domain: "Eukaryote",
+		kingdom: "Animal",
+		phylum: "Chordate",
+	},
+	// { id: 6, name: '6', sci_name: 'mel', common_name: 102, domain: "test2@gmail.com", kingdom: "09876543210", phylum: "09876543210"},
+	// { id: 7, name: '7', sci_name: 'ferclifford', common_name: 202, domain: "test7@gmail.com", kingdom: "09876543210", phylum: "09876543210" },
+	// { id: 8, name: '8', sci_name: 'rossfrances', common_name: 102, domain: "test9@gmail.com", kingdom: "09876543210", phylum: "09876543210" },
+	// { id: 9, name: '9', sci_name: 'hrvyroxie', common_name: 202, domain: "test2@gmail.com", kingdom: "09876543210", phylum: "09876543210" },
+];
+
+
 
 export default function ViewStrain() {
-	const [values, setValues] = useState({
-		id: "",
-		scientificName: "",
-		// commonName: "",
-		domain: "",
-		phylum: "",
-		order: "",
-		// kingdom: "",
-		family: "",
-		genus: "",
-		// medium: "",
-		// mediumComposition: "",
-		// temperature: "",
-		// temperatureRange: "",
-		// referenceList: "",
-		species: "",
-		typeStrain: "",
-		strainDesignation: "",
-		variant: "",
-	});
+	const [pageSize, setPageSize] = useState(5);
 
-	useEffect(() => {
-		getFetch('http://localhost:3001/view/strain'+ values.id).then((res) => {
-			if (!res) {
-				console.error("Strain cannot be viewed");
-			} else {
-				const strain = res.data;
-				console.log("Strain successfully viewed");
-				setValues({
-					id: strain.id,
-					scientificName: strain.scientificName,
-					domain: strain.domain,
-					phylum: strain.phylum,
-					order: strain.order,
-					family: strain.family,
-					genus: strain.genus,
-					species: strain.species,
-					typeStrain: strain.typeStrain,
-					strainDesignation: strain.strainDesignation,
-					variant: strain.variant,
-				});
-			};
-		})
-	}, [values]);
+	const navigate = useNavigate();
 
+	//----- For placeholder avatars only (will be replaced by profile photos)
+	function stringToColor(string) {
+		let hash = 0;
+		let i;
+
+		/* eslint-disable no-bitwise */
+		for (i = 0; i < string.length; i += 1) {
+			hash = string.charCodeAt(i) + ((hash << 5) - hash);
+		}
+
+		let color = "#";
+
+		for (i = 0; i < 3; i += 1) {
+			const value = (hash >> (i * 8)) & 0xff;
+			color += `00${value.toString(16)}`.slice(-2);
+		}
+		/* eslint-enable no-bitwise */
+
+		return color;
+	}
+
+	function stringAvatar(name) {
+		return {
+			sx: {
+				bgcolor: stringToColor(name),
+			},
+			children: `${name.split(" ")[0][0]}`,
+		};
+	}
+	//-----
+
+	// function getcommon_name(params) {
+	// 	switch(params.row.common_name){
+	// 		case 102:
+	// 			return "User"
+	// 		case 202:
+	// 			return "Admin"
+	// 	}
+	// }
+
+	
+
+	const columns = [
+		// {
+		// 	field: "id",
+		// 	headerName: "",
+		// 	minWidth: 50,
+		// 	sortable: false,
+		// 	renderCell: (params) => {
+		// 		console.log(params);
+		// 		return (
+		// 		  <>
+		// 			<Avatar {...stringAvatar(params.row.name)}/>
+		// 		  </>
+		// 		);
+		// 	  }
+		// },
+		{
+			field: "id",
+			headerName: "ID",
+			minWidth: 200,
+			flex: 1,
+		},
+		{
+			field: "scientificName",
+			headerName: "Scientific Name",
+			minwidth: 200,
+			flex: 1,
+		},
+		/* {
+			field: "common_name",
+			headerName: "Common Name",
+			minWidth: 110,
+			flex: 1,
+		}, */
+		{
+			field: "domain",
+			headerName: "Domain",
+			minWidth: 110,
+			flex: 1,
+		},
+		{
+			field: "kingdom",
+			headerName: "Kingdom",
+			minWidth: 110,
+			flex: 1,
+		},
+		{
+			field: "phylum",
+			headerName: "Phylum",
+			minWidth: 110,
+			flex: 1,
+		},
+		{
+			field: "actions",
+			headerName: "Actions",
+			type: "actions",
+			minWidth: 80,
+			getActions: (params) => [
+				<GridActionsCellItem icon={<Visibility color={"primary"} />} label="View User Details" />,
+				<GridActionsCellItem 
+					icon={<Edit color={"primary"} />} 
+					onClick={() => { navigate("/edit/strain", {state: params.row});console.log(params)}} 
+					label="Edit" 
+				/>,
+				<GridActionsCellItem icon={<Delete color={"primary"} />} label="Delete" />,
+			],
+		},
+	];
+	
 	return (
 		<ThemeProvider theme={theme}>
-			<Box>
-				{/* <Typography color="primary.gray"> This is the View Strains page! </Typography> */}
-				<div className="main">
-					<ArrowBack />
-					<Typography fontFamily="Inter">
-						<div className="topText">
-							<div className="topLeft">
-								<h1>
-									{values.scientificName}
-								</h1>
-								
-								{/* TODO: Update handling events in breadcrumbs */}
-								<Breadcrumbs aria-label='breadcrumb'>
-									<Link undeline='hover' href="#">
-										Strain
-									</Link>
-									<Typography color="primary.main">{values.scientificName}</Typography>
-								</Breadcrumbs>
+			<Box sx={{ display: "flex", flexDirection: "column", mx: "150px", my: "80px" }}>
+				<Typography variant={"h4"} fontWeight={"bold"} color={theme.palette.primary.main} mb={5}>
+					Strain Database
+					<br />
+					<input
+						name="search_term"
+						className="search_bar"
+						placeholder={"Search"}
+						// onChange={this.handleInputChange}
+					/>
+					{/* <GridActionsCellItem
+					icon={<AddIcon color={"primary"}/>}
+					label="Add Strain"
+				/> */}
+					<Button
+						variant="contained"
+						startIcon={<Add />}
+						onClick={() => navigate("/add/strain")}
+					>
+						Add Strain
+					</Button>
 
-							</div>
-							<div className="topRight">
-								{/* TODO: Hide edit button when user is logged in */}
-								<Button
-									startIcon={<Edit style={{ color: '#fff' }}/>}
-									variant="contained" 
-									size="medium"
-									sx={{ width: 150, padding: 1, margin: 2 }}
-									>
-										Edit
-								</Button>
-								<Button 
-									startIcon={<FileDownload style={{ color: '#fff' }}/>}
-									variant="contained" 
-									size="medium"
-									sx={{ width: 150, padding: 1, margin: 2 }}
-									>
-										Export
-								</Button>
-							</div>
-						</div>
-						<div className="container">
-							<div className="item">
-								<div className="left"><Typography fontWeight="bold" color="primary.grey">Scientific Name</Typography></div>
-								<div className="right"><Typography color="primary.main">{values.scientificName}</Typography></div>
-							</div>
-							{/* <div className="item">
-								<div className="left"><Typography fontWeight="bold" color="primary.grey">Common Name</Typography></div>
-								<div className="right"><Typography color="primary.main">{values.commonName}</Typography></div>
-							</div> */}
-							<div className="item">
-								<div className="left"><Typography fontWeight="bold" color="primary.grey">Domain</Typography></div>
-								<div className="right"><Typography color="primary.main">{values.domain}</Typography></div>
-							</div>
-							{/* <div className="item">
-								<div className="left"><Typography fontWeight="bold" color="primary.grey">Kingdom</Typography></div>
-								<div className="right"><Typography color="primary.main">{values.kingdom}</Typography></div>
-							</div> */}
-							<div className="item">
-								<div className="left"><Typography fontWeight="bold"  color="primary.grey">Phylum</Typography></div>
-								<div className="right"><Typography color="primary.main">{values.phylum}</Typography></div>
-							</div>
-							<div className="item">
-								<div className="left"><Typography fontWeight="bold"  color="primary.grey">Order</Typography></div>
-								<div className="right"><Typography color="primary.main">{values.order}</Typography></div>
-							</div>
-							{/* <div className="item">
-								<div className="left"><Typography fontWeight="bold" color="primary.grey">Medium</Typography></div>
-								<div className="right"><Typography color="primary.main">{values.medium}</Typography></div>
-							</div>
-							<div className="item">
-								<div className="left"><Typography fontWeight="bold" color="primary.grey">Medium Composition</Typography></div>
-								<div className="right"><Typography color="primary.main">{values.mediumComposition}</Typography></div>
-							</div>
-							<div className="item">
-								<div className="left"><Typography fontWeight="bold" color="primary.grey">Temperature</Typography></div>
-								<div className="right"><Typography color="primary.main">{values.temperature}</Typography></div>
-							</div>
-							<div className="item">
-								<div className="left"><Typography fontWeight="bold" color="primary.grey">Temperature Range</Typography></div>
-								<div className="right"><Typography color="primary.main">{values.temperatureRange}</Typography></div>
-							</div>
-							<div className="item">
-								<div className="left"><Typography fontWeight="bold" color="primary.grey">Reference List</Typography></div>
-								<div className="right"><Typography color="primary.main">{values.referenceList}</Typography></div>
-							</div> */}
-							<div className="item">
-								<div className="left"><Typography fontWeight="bold" color="primary.grey">Family</Typography></div>
-								<div className="right"><Typography color="primary.main">{values.family}</Typography></div>
-							</div>
-							<div className="item">
-								<div className="left"><Typography fontWeight="bold" color="primary.grey">Genus</Typography></div>
-								<div className="right"><Typography color="primary.main">{values.genus}</Typography></div>
-							</div>
-							<div className="item">
-								<div className="left"><Typography fontWeight="bold" color="primary.grey">Species</Typography></div>
-								<div className="right"><Typography color="primary.main">{values.species}</Typography></div>
-							</div>
-							<div className="item">
-								<div className="left"><Typography fontWeight="bold" color="primary.grey">Type Strain</Typography></div>
-								<div className="right"><Typography color="primary.main">{values.typeStrain}</Typography></div>
-							</div>
-							<div className="item">
-								<div className="left"><Typography fontWeight="bold" color="primary.grey">Strain Designation</Typography></div>
-								<div className="right"><Typography color="primary.main">{values.strainDesignation}</Typography></div>
-							</div>
-							<div className="item">
-								<div className="left"><Typography fontWeight="bold" color="primary.grey">variant</Typography></div>
-								<div className="right"><Typography color="primary.main">{values.variant}</Typography></div>
-							</div>
-						</div>
-
-					</Typography>
-				</div>
+				</Typography>
+				<DataGrid
+					rows={rows}
+					columns={columns}
+					pageSize={pageSize}
+					onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+					rowsPerPageOptions={[5, 10, 20]}
+					pagination
+					autoHeight
+				/>
 			</Box>
 		</ThemeProvider>
 	);
