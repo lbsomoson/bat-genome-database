@@ -73,3 +73,33 @@ exports.editStrain = async (req,res) => {
 		console.error("Failed to update a document.");    
 	}
 }
+
+// returns a strain
+exports.viewStrain = async (req,res) => {
+
+	try {
+		const strain = await strain.findById(req.param.id);
+		res.status(200);
+		res.send({ strain });
+
+	} catch(err) {
+		res.status(500);
+		res.send("Internal server error");
+		console.error("Failed to load a strain")
+	}
+}
+
+// returns strains
+exports.viewStrain = async (req,res) => {
+
+	try {
+		const strains = await strain.find();
+		res.status(200);
+		res.send({ strains });
+
+	} catch(err) {
+		res.status(500);
+		res.send("Internal server error");
+		console.error("Failed to load a strain")
+	}
+}
