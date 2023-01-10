@@ -246,7 +246,7 @@ const TopBar = () => {
 								open={Boolean(anchorUser)}
 								sx={{ mt: "34px" }}
 							>
-								<MenuItem
+								{/* <MenuItem
 									component={NavLink}
 									// to='/profile'
 									onClick={() => {
@@ -254,7 +254,7 @@ const TopBar = () => {
 									}}
 								>
 									Profile
-								</MenuItem>
+								</MenuItem> */}
 								<MenuItem
 									component={NavLink}
 									to="/"
