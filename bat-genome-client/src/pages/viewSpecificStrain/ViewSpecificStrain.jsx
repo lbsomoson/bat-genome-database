@@ -87,7 +87,7 @@ export default function ViewSpecificStrain() {
 									</Typography>
 								</div>
 								<div className="right">
-									<Typography color="primary.main">{values.strainDesignation}</Typography>
+									<Typography color="primary.main">{values.id}</Typography>
 								</div>
 							</div>
 							<div className="item">
