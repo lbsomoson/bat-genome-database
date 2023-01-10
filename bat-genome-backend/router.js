@@ -20,8 +20,9 @@ module.exports = (app) => {
 
 	// STRAIN ROUTES
 	app.post('/strains', setCORSHeader, strains.addStrain);
+	app.get('/strains', setCORSHeader, strains.viewStrains);
 	app.put('/strains/:id',setCORSHeader, strains.editStrain);
-	app.get('/view/specificstrain/:id', setCORSHeader, strains.viewStrain);
+	app.get('/view/specificstrain/:id', setCORSHeader, strains.viewSpecificStrain);
 	
 	// USER ROUTES
 	app.post('/signup', setCORSHeader, users.signUp);

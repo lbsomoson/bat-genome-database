@@ -74,19 +74,22 @@ exports.editStrain = async (req,res) => {
 	}
 }
 
-// returns a strain
-exports.viewStrain = async (req,res) => {
+// returns a specific strain
+exports.viewSpecificStrain = async (req,res) => {
+    try{
+        var body = {};
+		var strain = await strain.findById(req.param.id);
+		// res.send({ strain });
+        body.data = strain;
 
-	try {
-		const strain = await strain.findById(req.param.id);
-		res.status(200);
-		res.send({ strain });
-
-	} catch(err) {
-		res.status(500);
+        res.status(200);
+		res.send(body);
+		
+    }catch(e){
+        res.status(500);
 		res.send("Internal server error");
-		console.error("Failed to load a strain")
-	}
+		console.error("Failed to load a strain");
+    }
 }
 
 // returns strains

@@ -1,12 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
 
-import { Button, Box, ThemeProvider, Typography } from "@mui/material";
+import {
+	Button,
+	Box,
+	ThemeProvider,
+	Tooltip,
+	Typography
+} from "@mui/material";
 import "./viewStrain.css";
-import { Add, ArrowBack, Delete, Edit, FileDownload, Link, Visibility } from "@mui/icons-material";
+import {
+	Add,
+	ArrowBack,
+	Delete,
+	Edit,
+	FileDownload,
+	Link,
+	Visibility
+} from "@mui/icons-material";
 
 import { theme } from "../../theme";
+import { getFetch } from "../../utils/apiRequest";
 
 const rows = [
 	{
@@ -60,8 +75,12 @@ const rows = [
 	// { id: 9, name: '9', sci_name: 'hrvyroxie', common_name: 202, domain: "test2@gmail.com", kingdom: "09876543210", phylum: "09876543210" },
 ];
 
+
+
 export default function ViewStrain() {
 	const [pageSize, setPageSize] = useState(5);
+	const [query, setQuery] = useState({});
+	const [currRows, setCurrRows] = useState([]);
 
 	const navigate = useNavigate();
 
@@ -94,35 +113,10 @@ export default function ViewStrain() {
 			children: `${name.split(" ")[0][0]}`,
 		};
 	}
-	//-----
-
-	// function getcommon_name(params) {
-	// 	switch(params.row.common_name){
-	// 		case 102:
-	// 			return "User"
-	// 		case 202:
-	// 			return "Admin"
-	// 	}
-	// }
-
 	const columns = [
-		// {
-		// 	field: "id",
-		// 	headerName: "",
-		// 	minWidth: 50,
-		// 	sortable: false,
-		// 	renderCell: (params) => {
-		// 		console.log(params);
-		// 		return (
-		// 		  <>
-		// 			<Avatar {...stringAvatar(params.row.name)}/>
-		// 		  </>
-		// 		);
-		// 	  }
-		// },
 		{
 			field: "id",
-			headerName: "ID",
+			headerName: "Strain ID",
 			minWidth: 200,
 			flex: 1,
 		},
@@ -132,21 +126,9 @@ export default function ViewStrain() {
 			minwidth: 200,
 			flex: 1,
 		},
-		/* {
-			field: "common_name",
-			headerName: "Common Name",
-			minWidth: 110,
-			flex: 1,
-		}, */
 		{
 			field: "domain",
 			headerName: "Domain",
-			minWidth: 110,
-			flex: 1,
-		},
-		{
-			field: "kingdom",
-			headerName: "Kingdom",
 			minWidth: 110,
 			flex: 1,
 		},
@@ -157,46 +139,99 @@ export default function ViewStrain() {
 			flex: 1,
 		},
 		{
+			field: "order",
+			headerName: "Order",
+			minWidth: 110,
+			flex: 1,
+		},
+		{
 			field: "actions",
 			headerName: "Actions",
 			type: "actions",
 			minWidth: 80,
-			getActions: (params) => [
-				<GridActionsCellItem icon={<Visibility color={"primary"} />} label="View User Details" />,
-				<GridActionsCellItem
-					icon={<Edit color={"primary"} />}
-					onClick={() => {
-						navigate("/edit/strain", { state: params.row });
-						console.log(params);
-					}}
-					label="Edit"
-				/>,
-				<GridActionsCellItem icon={<Delete color={"primary"} />} label="Delete" />,
+			getActions: (data) => [
+				<Tooltip title="View Strain Details">
+					<GridActionsCellItem
+						icon={<Visibility color={"primary"} />}
+						label="View Strain Details"
+						// TODO: IPASA DITO YUNG ID NG STRAIN PARA YUN YUNG GAGAMITIN SA API CALL
+						onClick={() => navigate("/view/specificstrain")}
+					/>
+				</Tooltip>,
+				<Tooltip title="Edit Strain">
+					<GridActionsCellItem
+						icon={<Edit color={"primary"} />}
+						label="Edit Strain"
+						// TODO: IPASA DITO YUNG ID NG STRAIN PARA YUN YUNG GAGAMITIN SA API CALL
+						onClick={() => { navigate("/edit/strain", {state: data.row}); console.log(data)}} 
+					/>
+				</Tooltip>,
+				<Tooltip title="Delete Strain">
+					<GridActionsCellItem
+						icon={<Delete color={"primary"} />}
+						label="Delete"
+						// TODO: IPASA DITO YUNG ID NG STRAIN PARA YUN YUNG GAGAMITIN SA API CALL
+						// onClick={}
+					/>
+				</Tooltip>,
 			],
 		},
 	];
 
+
+	
+
+	// This function is used to update UI state.
+    async function setDisplay(data) {
+		console.log(data);
+        let allStrains = [];
+
+        // Checking if the inventory collections in DB is empty.
+        if (data.length > 0) {
+
+            // Map out the entries returned by fetch.
+            data.forEach((strain, index) => {
+                allStrains.unshift({
+                    id: strain.strainID,
+					scientificName: strain.scientificName,
+					domain: strain.domain,
+					phylum: strain.phylum,
+					order: strain.order,
+					family: strain.family,
+					genus: strain.genus,
+					species: strain.species,
+					strainDesignation: strain.strainDesignation,
+					strainType: strain.strainType
+                });
+			});
+			
+            // Setting UI table state
+            setCurrRows([...allStrains]);
+
+        } else {
+            setCurrRows([]);
+        }
+	}
+	
+	async function handleGetAllStrains() {
+        var data = await getFetch("http://localhost:3001/strains", query);
+		await setDisplay(data.strains);
+	};
+
+	useEffect(() => {
+		// Fetch all strains at component mount
+		handleGetAllStrains();
+
+		// eslint-disable-next-line
+	}, []);
+
+	
 	return (
 		<ThemeProvider theme={theme}>
-			<Box
-				sx={{
-					display: "flex",
-					flexDirection: "column",
-					mx: "150px",
-					my: "80px",
-				}}
-			>
-				<Typography
-					variant={"h4"}
-					fontWeight={"bold"}
-					color={theme.palette.primary.main}
-					mb={5}
-					sx={{ marginTop: "20px" }}
-				>
+			<Box sx={{ display: "flex", flexDirection: "column", mx: "150px", my: "80px" }}>
+				<Typography variant={"h4"} fontWeight={"bold"} color={theme.palette.primary.main} mb={5}>
 					Strain Database
-				</Typography>
-				<br />
-				<Box className="searchDiv">
+					<br />
 					<input
 						name="search_term"
 						className="search_bar"
@@ -209,16 +244,15 @@ export default function ViewStrain() {
 				/> */}
 					<Button
 						variant="contained"
-						sx={{ padding: "15px", width: "240px" }}
 						startIcon={<Add />}
 						onClick={() => navigate("/add/strain")}
 					>
 						Add Strain
 					</Button>
-				</Box>
 
+				</Typography>
 				<DataGrid
-					rows={rows}
+					rows={currRows}
 					columns={columns}
 					pageSize={pageSize}
 					onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
