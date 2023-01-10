@@ -77,13 +77,9 @@ exports.editStrain = async (req,res) => {
 // returns a specific strain
 exports.viewSpecificStrain = async (req,res) => {
     try{
-        var body = {};
-		var strain = await strain.findById(req.param.id);
-		// res.send({ strain });
-        body.data = strain;
-
-        res.status(200);
-		res.send(body);
+		var strain = await strain.findById(req.param.strainID);
+		res.send({ strain });
+        res.status(200).send(body);
 		
     }catch(e){
         res.status(500);

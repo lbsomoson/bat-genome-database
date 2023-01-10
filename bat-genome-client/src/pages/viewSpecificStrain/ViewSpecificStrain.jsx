@@ -1,29 +1,15 @@
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { ThemeProvider, Typography, Box, Button, Breadcrumbs } from "@mui/material";
 import { ArrowBack, Edit, FileDownload, Link } from "@mui/icons-material";
 import { theme } from "../../theme";
 
 import "./ViewSpecificStrain.css";
-import { getFetch } from "../../utils/apiRequest";
 
-// const values = {
-// 	scientificName: "Abditibacterium utsteinense",
-
-// 	collectionNumber: "Collection Number",
-// 	strainDesignation: "Strain Designation",
-// 	strainType: "Strain Type",
-// 	variant: "Variant",
-// 	domain: "Domain",
-// 	phylum: "Phylum",
-// 	order: "Order",
-// 	family: "Family",
-// 	genus: "Genus",
-// 	species: "Species",
-// };
 
 export default function ViewSpecificStrain() {
 	const [values, setValues] = useState({
-		id: "",
+		strainID: "",
 		scientificName: "",
 		domain: "",
 		phylum: "",
@@ -33,37 +19,21 @@ export default function ViewSpecificStrain() {
 		species: "",
 		typeStrain: "",
 		strainDesignation: "",
-		variant: "",
 	});
+
+	const { state } = useLocation();
+
+	useEffect(() => {
+		// set values to strain values
+		setValues({ ...values, ...state });
+
+		// eslint-disable-next-line
+	}, []);
 
 	function handleClick(event) {
 		event.preventDefault();
 		console.info("You clicked a breadcrumb.");
 	}
-
-	useEffect(() => {
-		getFetch("http://localhost:3001/view/strain" + values.id).then((res) => {
-			if (!res) {
-				console.error("Strain cannot be viewed");
-			} else {
-				const strain = res.data;
-				console.log("Strain successfully viewed");
-				setValues({
-					id: strain.id,
-					scientificName: strain.scientificName,
-					domain: strain.domain,
-					phylum: strain.phylum,
-					order: strain.order,
-					family: strain.family,
-					genus: strain.genus,
-					species: strain.species,
-					typeStrain: strain.typeStrain,
-					strainDesignation: strain.strainDesignation,
-					variant: strain.variant,
-				});
-			}
-		});
-	}, [values]);
 
 	return (
 		<ThemeProvider theme={theme}>
@@ -113,6 +83,16 @@ export default function ViewSpecificStrain() {
 							<div className="item">
 								<div className="left">
 									<Typography fontWeight="bold" color="primary.gray">
+										Strain ID
+									</Typography>
+								</div>
+								<div className="right">
+									<Typography color="primary.main">{values.strainDesignation}</Typography>
+								</div>
+							</div>
+							<div className="item">
+								<div className="left">
+									<Typography fontWeight="bold" color="primary.gray">
 										Scientific Name
 									</Typography>
 								</div>
@@ -120,16 +100,6 @@ export default function ViewSpecificStrain() {
 									<Typography color="primary.main">{values.scientificName}</Typography>
 								</div>
 							</div>
-							{/* <div className="item">
-								<div className="left">
-									<Typography fontWeight="bold" color="primary.gray">
-										Collection Number
-									</Typography>
-								</div>
-								<div className="right">
-									<Typography color="primary.main">{values.collectionNumber}</Typography>
-								</div>
-							</div> */}
 							<div className="item">
 								<div className="left">
 									<Typography fontWeight="bold" color="primary.gray">
@@ -148,16 +118,6 @@ export default function ViewSpecificStrain() {
 								</div>
 								<div className="right">
 									<Typography color="primary.main">{values.strainType}</Typography>
-								</div>
-							</div>
-							<div className="item">
-								<div className="left">
-									<Typography fontWeight="bold" color="primary.gray">
-										Variant
-									</Typography>
-								</div>
-								<div className="right">
-									<Typography color="primary.main">{values.variant}</Typography>
 								</div>
 							</div>
 							<div className="item">

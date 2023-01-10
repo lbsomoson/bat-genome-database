@@ -23,58 +23,6 @@ import {
 import { theme } from "../../theme";
 import { getFetch } from "../../utils/apiRequest";
 
-const rows = [
-	{
-		id: 1,
-		name: "1",
-		scientificName: "Cistugo",
-		common_name: "Lesueur's Wing-gland Bat",
-		domain: "Eukaryote",
-		kingdom: "Animal",
-		phylum: "Chordate",
-	},
-	{
-		id: 2,
-		name: "2",
-		scientificName: "Cistugo",
-		common_name: "Angolan Wing-gland Bat",
-		domain: "Eukaryote",
-		kingdom: "Animal",
-		phylum: "Chordate",
-	},
-	{
-		id: 3,
-		name: "3",
-		scientificName: "Craseonycteris",
-		common_name: "Bumblebee Bat",
-		domain: "Eukaryote",
-		kingdom: "Animal",
-		phylum: "Chordate",
-	},
-	{
-		id: 4,
-		name: "4",
-		scientificName: "Balantiopteryx",
-		common_name: "Ecuadorian Sac-winged Bat",
-		domain: "Eukaryote",
-		kingdom: "Animal",
-		phylum: "Chordate",
-	},
-	{
-		id: 5,
-		name: "5",
-		scientificName: "Balantiopteryx",
-		common_name: "Thomas's Sac-winged Bat",
-		domain: "Eukaryote",
-		kingdom: "Animal",
-		phylum: "Chordate",
-	},
-	// { id: 6, name: '6', sci_name: 'mel', common_name: 102, domain: "test2@gmail.com", kingdom: "09876543210", phylum: "09876543210"},
-	// { id: 7, name: '7', sci_name: 'ferclifford', common_name: 202, domain: "test7@gmail.com", kingdom: "09876543210", phylum: "09876543210" },
-	// { id: 8, name: '8', sci_name: 'rossfrances', common_name: 102, domain: "test9@gmail.com", kingdom: "09876543210", phylum: "09876543210" },
-	// { id: 9, name: '9', sci_name: 'hrvyroxie', common_name: 202, domain: "test2@gmail.com", kingdom: "09876543210", phylum: "09876543210" },
-];
-
 
 
 export default function ViewStrain() {
@@ -155,7 +103,7 @@ export default function ViewStrain() {
 						icon={<Visibility color={"primary"} />}
 						label="View Strain Details"
 						// TODO: IPASA DITO YUNG ID NG STRAIN PARA YUN YUNG GAGAMITIN SA API CALL
-						onClick={() => navigate("/view/specificstrain")}
+						onClick={() => navigate("/view/specificstrain", {state: data.row})}
 					/>
 				</Tooltip>,
 				<Tooltip title="Edit Strain">
@@ -177,8 +125,6 @@ export default function ViewStrain() {
 			],
 		},
 	];
-
-
 	
 
 	// This function is used to update UI state.
