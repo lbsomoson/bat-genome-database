@@ -106,3 +106,16 @@ exports.viewStrains = async (req,res) => {
 		console.error("Failed to load a strain")
 	}
 }
+
+exports.deleteStrain = async (req,res) => {
+	try {
+		const delStrain = await strain.deleteMany({strainID: req.params.id});
+		res.status(200);
+		res.send({ delStrain });
+
+	} catch(err) {
+		res.status(500);
+		res.send("Internal server error");
+		console.error("Failed to delete a strain")
+	}
+}

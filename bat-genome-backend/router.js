@@ -23,6 +23,7 @@ module.exports = (app) => {
 	app.get('/strains', setCORSHeader, strains.viewStrains);
 	app.put('/strains/:id',setCORSHeader, strains.editStrain);
 	app.get('/view/specificstrain/:id', setCORSHeader, strains.viewSpecificStrain);
+	app.delete('/strains/:id',setCORSHeader, strains.deleteStrain);
 	
 	// USER ROUTES
 	app.post('/signup', setCORSHeader, users.signUp);
