@@ -178,7 +178,7 @@ export default function EditStrain() {
 							label="Strain ID"
 							name="strainID"
 							variant="outlined"
-							value={values.strainID}
+							value={values.id}
 							onChange={handleChange}
 							fullWidth
 						/>
