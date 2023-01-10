@@ -3,6 +3,8 @@ import { theme } from "../../theme";
 import { postFetch } from "../../utils/apiRequest.js";
 import "./AddStrain.css";
 
+import { useNavigate } from "react-router-dom";
+
 import {
 	ThemeProvider,
 	Box,
@@ -15,8 +17,6 @@ import {
 } from "@mui/material";
 import { ArrowBack } from "@mui/icons-material";
 
-
-
 /* const species = [
 	{ value: "specie-1", text: "Specie 1" },
 	{ value: "specie-2", text: "Specie 2" },
@@ -25,8 +25,9 @@ import { ArrowBack } from "@mui/icons-material";
 	{ value: "specie-5", text: "Specie 5" },
 ]; */
 
-
 export default function AddStrain() {
+	const navigate = useNavigate();
+
 	const [values, setValues] = useState({
 		strainID: "",
 		scientificName: "",
@@ -37,9 +38,8 @@ export default function AddStrain() {
 		order: "",
 		family: "",
 		genus: "",
-		species: ""
+		species: "",
 	});
-
 
 	// For input of types text or select
 	const handleChange = (e) => {
@@ -108,8 +108,7 @@ export default function AddStrain() {
 	// TODO: read file contents
 
 	// Handles POST request for strain creation
-	const handleAddStrain = async() => {
-		
+	const handleAddStrain = async () => {
 		// Object to be added to DB
 		let newStrain = {
 			strainID: values.strainID.toUpperCase(),
@@ -125,26 +124,26 @@ export default function AddStrain() {
 		};
 
 		// Perform POST request
-		postFetch('http://localhost:3001/strains', newStrain).then((res) => {
+		postFetch("http://localhost:3001/strains", newStrain).then((res) => {
 			// Checking if the action is successful
 			if (!res) {
 				console.error("Strain not added");
 			} else {
 				console.log("Strain successfully added");
-			};
-		})
-	}
+			}
+		});
+	};
 
 	return (
 		<ThemeProvider theme={theme}>
 			<Box className="main">
 				<ArrowBack />
-				<Box mt={5} mb={5}>
+				<Box mt={5} mb={5} sx={{ marginTop: "100px" }}>
 					<h1>Add Strain</h1>
 				</Box>
 				{/* Form */}
 				<Grid container rowSpacing={2} columnSpacing={3}>
-					<Grid item md={6}>
+					<Grid item md={12}>
 						<TextField
 							label="Scientific Name"
 							name="scientificName"
@@ -154,7 +153,7 @@ export default function AddStrain() {
 							fullWidth
 						/>
 					</Grid>
-					<Grid item md={6}>
+					<Grid item md={4}>
 						<TextField
 							label="Strain ID"
 							name="strainID"
@@ -247,18 +246,17 @@ export default function AddStrain() {
 					</Grid>
 
 					<Grid item md={6}>
-						<Button variant="outlined" sx={{ padding: "10px" }} fullWidth>
-							CANCEL
-						</Button>{" "}
-						{/*TODO: cancel*/}
-					</Grid>
-					<Grid item md={6}>
 						<Button
-							variant="contained"
+							variant="outlined"
 							sx={{ padding: "10px" }}
 							fullWidth
-							onClick={handleAddStrain}
+							onClick={() => navigate("/view/strain")}
 						>
+							CANCEL
+						</Button>{" "}
+					</Grid>
+					<Grid item md={6}>
+						<Button variant="contained" sx={{ padding: "10px" }} fullWidth onClick={handleAddStrain}>
 							ADD STRAIN
 						</Button>
 						{/*TODO: onlick*/}

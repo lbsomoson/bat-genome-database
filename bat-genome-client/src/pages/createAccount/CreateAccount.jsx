@@ -62,26 +62,25 @@ export default function CreateAccount() {
 			address: data.address,
 			password: data.password,
 			role: "user",
-		  }
+		};
 
-		  // send a POSt request to localhost:3001/login
-		  fetch(
-			"http://localhost:3001/signUp",
-			{
-			  method: "POST",
-			  headers: {
-				"Content-Type": "application/json"
-			  },
-			  body: JSON.stringify(user)
-			})
-			.then(response => response.json())
-			.then(body => {
-			  // For other prompts
+		// send a POSt request to localhost:3001/login
+		fetch("http://localhost:3001/signUp", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(user),
+		})
+			.then((response) => response.json())
+			.then((body) => {
+				// For other prompts
 				if (body.success) {
-				alert("Successfully saved");
-				navigate("/login");
-			  }
-			  else { alert("Failed to save user"); }
+					alert("Successfully saved");
+					navigate("/login");
+				} else {
+					alert("Failed to save user");
+				}
 			});
 	};
 
@@ -103,8 +102,8 @@ export default function CreateAccount() {
 						color="primary.white"
 						sx={{ marginTop: "20px", marginBottom: "20px", fontWeight: "400", lineHeight: "28px" }}
 					>
-						Bat Genome Database is ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
-						ut aliquip ex ea commodo consequat.
+						The <b> Bat Genome Database</b> is a web-based platform that enables users to access and
+						contribute information about the genomes of various strains of bats.
 					</Typography>
 				</Box>
 

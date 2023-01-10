@@ -20,8 +20,8 @@ import { putFetch } from "../../utils/apiRequest.js";
 // Check for changes
 
 export default function EditStrain() {
-	const [isDisabled, setIsDisabled]= useState(true);
-	const [currentState, setCurrentState]= useState({});
+	const [isDisabled, setIsDisabled] = useState(true);
+	const [currentState, setCurrentState] = useState({});
 	const [values, setValues] = useState({
 		strainID: "",
 		scientificName: "",
@@ -32,7 +32,7 @@ export default function EditStrain() {
 		order: "",
 		family: "",
 		genus: "",
-		species: ""
+		species: "",
 
 		/* name: "",
 		scientificName: "",
@@ -123,14 +123,11 @@ export default function EditStrain() {
 	// TODO: read file contents
 
 	useEffect(() => {
-		setValues({...values, ...state})
-		
-	  }, []);
+		setValues({ ...values, ...state });
+	}, []);
 
-	
 	// Handles PUT request for strain creation
-	const handleEditStrain = async() => {
-		
+	const handleEditStrain = async () => {
 		// Object to be added to DB
 		let newStrain = {
 			strainID: values.id.toString(),
@@ -146,27 +143,27 @@ export default function EditStrain() {
 		};
 
 		// Perform POST request
-		putFetch('http://localhost:3001/strains/'+ values.id, newStrain).then((res) => {
+		putFetch("http://localhost:3001/strains/" + values.id, newStrain).then((res) => {
 			// Checking if the action is successful
 			if (!res) {
 				console.error("Strain not added");
 			} else {
 				console.log("Strain successfully added");
 				navigate("/view/strain");
-			};
-		})
-	}
+			}
+		});
+	};
 
 	return (
 		<ThemeProvider theme={theme}>
 			<Box className="main">
 				<ArrowBack />
-				<Box mt={5} mb={5}>
+				<Box mt={5} mb={5} sx={{ marginTop: "100px" }}>
 					<h1>Edit Strain</h1>
 				</Box>
 				{/* Form */}
 				<Grid container rowSpacing={2} columnSpacing={3}>
-					<Grid item md={6}>
+					<Grid item md={12}>
 						<TextField
 							label="Scientific Name"
 							name="scientificName"
@@ -176,7 +173,7 @@ export default function EditStrain() {
 							fullWidth
 						/>
 					</Grid>
-					<Grid item md={6}>
+					<Grid item md={4}>
 						<TextField
 							label="Strain ID"
 							name="strainID"
@@ -269,26 +266,25 @@ export default function EditStrain() {
 					</Grid>
 
 					<Grid item md={6}>
-						<Button 
-							variant="outlined" 
-							sx={{ padding: "10px" }} 
-							onClick={()=> navigate("/view/strain")} 
+						<Button
+							variant="outlined"
+							sx={{ padding: "10px" }}
+							onClick={() => navigate("/view/strain")}
 							fullWidth
 						>
 							CANCEL
 						</Button>{" "}
 					</Grid>
 					<Grid item md={6}>
-						<Button 
-							variant="contained" 
+						<Button
+							variant="contained"
 							sx={{ padding: "10px" }}
 							onClick={handleEditStrain}
-							disabled={isDisabled}
+							/* disabled={isDisabled} */
 							fullWidth
 						>
 							SAVE CHANGES
 						</Button>{" "}
-
 					</Grid>
 				</Grid>
 			</Box>

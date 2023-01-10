@@ -42,7 +42,7 @@ export default function ViewSpecificStrain() {
 	}
 
 	useEffect(() => {
-		getFetch('http://localhost:3001/view/strain'+ values.id).then((res) => {
+		getFetch("http://localhost:3001/view/strain" + values.id).then((res) => {
 			if (!res) {
 				console.error("Strain cannot be viewed");
 			} else {
@@ -61,8 +61,8 @@ export default function ViewSpecificStrain() {
 					strainDesignation: strain.strainDesignation,
 					variant: strain.variant,
 				});
-			};
-		})
+			}
+		});
 	}, [values]);
 
 	return (
@@ -75,7 +75,7 @@ export default function ViewSpecificStrain() {
 						<div className="topText">
 							<div className="topLeft">
 								<h1>{values.scientificName}</h1>
-								<div role="navigation" onClick={handleClick}>
+								{/* <div role="navigation" onClick={handleClick}>
 									<Breadcrumbs aria-label="breadcrumb">
 										<Link underline="hover" color="inherit" href="/">
 											Strain
@@ -87,11 +87,11 @@ export default function ViewSpecificStrain() {
 											{values.scientificName}
 										</Link>
 									</Breadcrumbs>
-								</div>
+								</div> */}
 							</div>
 							<div className="topRight">
 								{/* TODO: Hide edit button when user is logged in */}
-								<Button
+								{/* <Button
 									startIcon={<Edit style={{ color: "#fff" }} />}
 									variant="contained"
 									size="medium"
@@ -106,7 +106,7 @@ export default function ViewSpecificStrain() {
 									sx={{ width: 150, padding: 1, margin: 2 }}
 								>
 									Export
-								</Button>
+								</Button> */}
 							</div>
 						</div>
 						<div className="container">

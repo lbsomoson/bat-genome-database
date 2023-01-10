@@ -2,25 +2,11 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
 
-import {
-	Button,
-	Box,
-	ThemeProvider,
-	Typography
-} from "@mui/material";
+import { Button, Box, ThemeProvider, Typography } from "@mui/material";
 import "./viewStrain.css";
-import {
-	Add,
-	ArrowBack,
-	Delete,
-	Edit,
-	FileDownload,
-	Link,
-	Visibility
-} from "@mui/icons-material";
+import { Add, ArrowBack, Delete, Edit, FileDownload, Link, Visibility } from "@mui/icons-material";
 
 import { theme } from "../../theme";
-
 
 const rows = [
 	{
@@ -74,8 +60,6 @@ const rows = [
 	// { id: 9, name: '9', sci_name: 'hrvyroxie', common_name: 202, domain: "test2@gmail.com", kingdom: "09876543210", phylum: "09876543210" },
 ];
 
-
-
 export default function ViewStrain() {
 	const [pageSize, setPageSize] = useState(5);
 
@@ -120,8 +104,6 @@ export default function ViewStrain() {
 	// 			return "Admin"
 	// 	}
 	// }
-
-	
 
 	const columns = [
 		// {
@@ -181,22 +163,40 @@ export default function ViewStrain() {
 			minWidth: 80,
 			getActions: (params) => [
 				<GridActionsCellItem icon={<Visibility color={"primary"} />} label="View User Details" />,
-				<GridActionsCellItem 
-					icon={<Edit color={"primary"} />} 
-					onClick={() => { navigate("/edit/strain", {state: params.row});console.log(params)}} 
-					label="Edit" 
+				<GridActionsCellItem
+					icon={<Edit color={"primary"} />}
+					onClick={() => {
+						navigate("/edit/strain", { state: params.row });
+						console.log(params);
+					}}
+					label="Edit"
 				/>,
 				<GridActionsCellItem icon={<Delete color={"primary"} />} label="Delete" />,
 			],
 		},
 	];
-	
+
 	return (
 		<ThemeProvider theme={theme}>
-			<Box sx={{ display: "flex", flexDirection: "column", mx: "150px", my: "80px" }}>
-				<Typography variant={"h4"} fontWeight={"bold"} color={theme.palette.primary.main} mb={5}>
+			<Box
+				sx={{
+					display: "flex",
+					flexDirection: "column",
+					mx: "150px",
+					my: "80px",
+				}}
+			>
+				<Typography
+					variant={"h4"}
+					fontWeight={"bold"}
+					color={theme.palette.primary.main}
+					mb={5}
+					sx={{ marginTop: "20px" }}
+				>
 					Strain Database
-					<br />
+				</Typography>
+				<br />
+				<Box className="searchDiv">
 					<input
 						name="search_term"
 						className="search_bar"
@@ -209,13 +209,14 @@ export default function ViewStrain() {
 				/> */}
 					<Button
 						variant="contained"
+						sx={{ padding: "15px", width: "240px" }}
 						startIcon={<Add />}
 						onClick={() => navigate("/add/strain")}
 					>
 						Add Strain
 					</Button>
+				</Box>
 
-				</Typography>
 				<DataGrid
 					rows={rows}
 					columns={columns}
