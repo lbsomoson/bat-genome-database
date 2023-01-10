@@ -21,7 +21,7 @@ import {
 } from "@mui/icons-material";
 
 import { theme } from "../../theme";
-import { getFetch } from "../../utils/apiRequest";
+import { deleteFetch, getFetch } from "../../utils/apiRequest";
 
 
 
@@ -61,6 +61,20 @@ export default function ViewStrain() {
 			children: `${name.split(" ")[0][0]}`,
 		};
 	}
+
+	const handleDeleteStrain = async (data) => {
+		// Perform DELETE request
+		deleteFetch("http://localhost:3001/strains/", data.row.id).then((res) => {
+			// Checking if the action is successful
+			if (!res) {
+				console.error("Strain not deleted");
+			} else {
+				console.log("Strain successfully deleted");
+				window.location.reload(true);
+			}
+		});
+	};
+
 	const columns = [
 		{
 			field: "id",
@@ -119,7 +133,11 @@ export default function ViewStrain() {
 						icon={<Delete color={"primary"} />}
 						label="Delete"
 						// TODO: IPASA DITO YUNG ID NG STRAIN PARA YUN YUNG GAGAMITIN SA API CALL
-						// onClick={}
+						onClick={
+							() => { 
+								handleDeleteStrain(data);
+							}
+						}
 					/>
 				</Tooltip>,
 			],
