@@ -10,4 +10,4 @@
 #### Backend
 * To run the backend of the application, navigate inside the `bat-genome-backend` directory on your console. 
 * Then, run command `docker build -t bat-genome-backend .` to build the docker image.
-* Finally, run the command `docker run -p 3000:3000 bat-genome-backend` to run the docker container.
+* Finally, run the command `docker run -p 5000:5000 bat-genome-backend` to run the docker container.
